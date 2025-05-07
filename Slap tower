@@ -1,0 +1,57 @@
+-- Script Slap Tower by Channel LuckyExplore
+
+local player = game:GetService("Players").LocalPlayer
+local character = player.Character or player.CharacterAdded:Wait()
+
+
+local gui = Instance.new("ScreenGui", player:WaitForChild("PlayerGui"))
+gui.Name = "TeleportGui"
+gui.ResetOnSpawn = false
+
+
+local frame = Instance.new("Frame", gui)
+frame.Size = UDim2.new(0, 200, 0, 295) -- tambah tinggi sebab ada 6 butang
+frame.Position = UDim2.new(0, 20, 0.5, -147)
+frame.BackgroundColor3 = Color3.fromRGB(255, 0, 0)
+frame.BorderSizePixel = 0
+frame.Active = true
+frame.Draggable = true
+
+
+task.spawn(function()
+	while true do
+		for h = 0, 1, 0.01 do
+			frame.BackgroundColor3 = Color3.fromHSV(h, 1, 1)
+			task.wait(0.05)
+		end
+	end
+end)
+
+
+local buttons = {
+	{"Slap king 👑", Vector3.new(-180.64, 769.30, 50.21)},
+	{"Slap Groub☄️", Vector3.new(-17.16, -10.70, 98.85)},
+	{"Troll 1", Vector3.new(33.28, 169.30, 16.40)},
+	{"Troll 2", Vector3.new(32.53, 169.30, 95.06)},
+	{"Spawn Lobby", Vector3.new(-47.44, -10.70, 40.96)},
+	{"Slap Silver 🥈", Vector3.new(-11.06, -10.70, 20.17)},
+}
+
+
+for i, info in ipairs(buttons) do
+	local btn = Instance.new("TextButton", frame)
+	btn.Size = UDim2.new(1, -20, 0, 40)
+	btn.Position = UDim2.new(0, 10, 0, (i - 1) * 45 + 10)
+	btn.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+	btn.TextColor3 = Color3.fromRGB(255, 255, 255)
+	btn.Font = Enum.Font.SourceSansBold
+	btn.TextSize = 18
+	btn.Text = info[1]
+
+	btn.MouseButton1Click:Connect(function()
+		local root = player.Character and player.Character:FindFirstChild("HumanoidRootPart")
+		if root then
+			root.CFrame = CFrame.new(info[2])
+		end
+	end)
+end
