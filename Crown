@@ -2,24 +2,29 @@ local Players = game:GetService("Players")
 local RunService = game:GetService("RunService")
 local UserInputService = game:GetService("UserInputService")
 
+-- إعدادات الميزات
 local hitboxSize = Vector3.new(12, 12, 12)
+local playerSizeMultiplier = 5 -- حجم اللاعب بعد التكبير
 local isExpanded = false
 local isSpeedBoostActive = false
 local isInfiniteJumpActive = false
+local isPlayerSizeBoostActive = false
 local normalSpeed = 16
 local boostedSpeed = normalSpeed * 6
 
+-- الحصول على شخصية اللاعب
 local player = Players.LocalPlayer
 local character = player.Character or player.CharacterAdded:Wait()
 local humanoid = character:WaitForChild("Humanoid")
 
+-- إنشاء واجهة المستخدم
 local screenGui = Instance.new("ScreenGui")
 screenGui.Name = "GameEnhancerGui"
 screenGui.Parent = player:WaitForChild("PlayerGui")
 
 local frame = Instance.new("Frame")
-frame.Size = UDim2.new(0, 400, 0, 300)  -- Reduced height since we removed a button
-frame.Position = UDim2.new(0.5, -200, 0.5, -150)
+frame.Size = UDim2.new(0, 400, 0, 350)  -- زيادة الارتفاع لإضافة زر جديد
+frame.Position = UDim2.new(0.5, -200, 0.5, -175)
 frame.BackgroundColor3 = Color3.new(0.2, 0.2, 0.2)
 frame.BorderSizePixel = 0
 frame.Parent = screenGui
@@ -43,32 +48,45 @@ titleLabel.TextColor3 = Color3.new(1, 1, 1)
 titleLabel.BackgroundTransparency = 1
 titleLabel.Parent = frame
 
+-- زر توسيع الهيت بوكس
 local expandButton = Instance.new("TextButton")
-expandButton.Size = UDim2.new(0.8, 0, 0.2, 0)
-expandButton.Position = UDim2.new(0.1, 0, 0.25, 0)
+expandButton.Size = UDim2.new(0.8, 0, 0.15, 0)
+expandButton.Position = UDim2.new(0.1, 0, 0.2, 0)
 expandButton.Text = "Expand Hitboxes: OFF"
 expandButton.TextSize = 18
 expandButton.TextColor3 = Color3.new(1, 1, 1)
 expandButton.BackgroundColor3 = Color3.new(0.2, 0.6, 0.8)
 expandButton.Parent = frame
 
+-- زر زيادة السرعة
 local speedButton = Instance.new("TextButton")
-speedButton.Size = UDim2.new(0.8, 0, 0.2, 0)
-speedButton.Position = UDim2.new(0.1, 0, 0.5, 0)
+speedButton.Size = UDim2.new(0.8, 0, 0.15, 0)
+speedButton.Position = UDim2.new(0.1, 0, 0.4, 0)
 speedButton.Text = "Speed Boost (6x): OFF"
 speedButton.TextSize = 18
 speedButton.TextColor3 = Color3.new(1, 1, 1)
 speedButton.BackgroundColor3 = Color3.new(0.2, 0.6, 0.8)
 speedButton.Parent = frame
 
+-- زر القفز اللانهائي
 local jumpButton = Instance.new("TextButton")
-jumpButton.Size = UDim2.new(0.8, 0, 0.2, 0)
-jumpButton.Position = UDim2.new(0.1, 0, 0.75, 0)
+jumpButton.Size = UDim2.new(0.8, 0, 0.15, 0)
+jumpButton.Position = UDim2.new(0.1, 0, 0.6, 0)
 jumpButton.Text = "Infinite Jump: OFF"
 jumpButton.TextSize = 18
 jumpButton.TextColor3 = Color3.new(1, 1, 1)
 jumpButton.BackgroundColor3 = Color3.new(0.2, 0.6, 0.8)
 jumpButton.Parent = frame
+
+-- زر تكبير اللاعبين (للرؤية فقط)
+local sizeButton = Instance.new("TextButton")
+sizeButton.Size = UDim2.new(0.8, 0, 0.15, 0)
+sizeButton.Position = UDim2.new(0.1, 0, 0.8, 0)
+sizeButton.Text = "Big Players (View Only): OFF"
+sizeButton.TextSize = 18
+sizeButton.TextColor3 = Color3.new(1, 1, 1)
+sizeButton.BackgroundColor3 = Color3.new(0.2, 0.6, 0.8)
+sizeButton.Parent = frame
 
 local openButton = Instance.new("TextButton")
 openButton.Size = UDim2.new(0, 100, 0, 30)
@@ -78,11 +96,48 @@ openButton.TextColor3 = Color3.new(1, 1, 1)
 openButton.BackgroundColor3 = Color3.new(0.2, 0.6, 0.8)
 openButton.Parent = screenGui
 
+-- دالة لتكبير/تصغير اللاعبين (للرؤية فقط)
+local function resizePlayers()
+    for _, otherPlayer in pairs(Players:GetPlayers()) do
+        if otherPlayer ~= player and otherPlayer.Character then
+            local humanoidRootPart = otherPlayer.Character:FindFirstChild("HumanoidRootPart")
+            local head = otherPlayer.Character:FindFirstChild("Head")
+            
+            if humanoidRootPart and head then
+                if isPlayerSizeBoostActive then
+                    -- تكبير حجم اللاعبين (للرؤية فقط)
+                    humanoidRootPart.Size = Vector3.new(2 * playerSizeMultiplier, 2 * playerSizeMultiplier, 1 * playerSizeMultiplier)
+                    head.Size = Vector3.new(1.5 * playerSizeMultiplier, 1.5 * playerSizeMultiplier, 1.5 * playerSizeMultiplier)
+                    
+                    -- تكبير الملحقات (Accessories) مثل القبعات
+                    for _, accessory in pairs(otherPlayer.Character:GetChildren()) do
+                        if accessory:IsA("Accessory") and accessory:FindFirstChild("Handle") then
+                            accessory.Handle.Size = accessory.Handle.Size * playerSizeMultiplier
+                        end
+                    end
+                else
+                    -- إعادة الحجم الأصلي
+                    humanoidRootPart.Size = Vector3.new(2, 2, 1)
+                    head.Size = Vector3.new(1.5, 1.5, 1.5)
+                    
+                    -- إعادة حجم الملحقات
+                    for _, accessory in pairs(otherPlayer.Character:GetChildren()) do
+                        if accessory:IsA("Accessory") and accessory:FindFirstChild("Handle") then
+                            accessory.Handle.Size = accessory.Handle.Size / playerSizeMultiplier
+                        end
+                    end
+                end
+            end
+        end
+    end
+end
+
+-- دالة توسيع الهيت بوكس
 local function expandHitboxes()
-    for _, player in pairs(Players:GetPlayers()) do
-        if player ~= Players.LocalPlayer and player.Character and player.Character:FindFirstChild("HumanoidRootPart") then
-            local humanoid = player.Character:FindFirstChild("Humanoid")
-            local humanoidRootPart = player.Character.HumanoidRootPart
+    for _, otherPlayer in pairs(Players:GetPlayers()) do
+        if otherPlayer ~= player and otherPlayer.Character and otherPlayer.Character:FindFirstChild("HumanoidRootPart") then
+            local humanoid = otherPlayer.Character:FindFirstChild("Humanoid")
+            local humanoidRootPart = otherPlayer.Character.HumanoidRootPart
             if humanoid and humanoid.Health > 0 then
                 humanoidRootPart.Size = isExpanded and hitboxSize or Vector3.new(2, 2, 1)
                 humanoidRootPart.Transparency = isExpanded and 0.5 or 1
@@ -95,10 +150,12 @@ local function expandHitboxes()
     end
 end
 
+-- دالة تبديل واجهة المستخدم
 local function toggleGui()
     frame.Visible = not frame.Visible
 end
 
+-- دالة تبديل توسيع الهيت بوكس
 local function toggleExpand()
     isExpanded = not isExpanded
     expandButton.Text = isExpanded and "Expand Hitboxes: ON" or "Expand Hitboxes: OFF"
@@ -106,6 +163,7 @@ local function toggleExpand()
     expandHitboxes()
 end
 
+-- دالة تبديل زيادة السرعة
 local function toggleSpeed()
     isSpeedBoostActive = not isSpeedBoostActive
     speedButton.Text = isSpeedBoostActive and "Speed Boost (6x): ON" or "Speed Boost (6x): OFF"
@@ -113,27 +171,45 @@ local function toggleSpeed()
     humanoid.WalkSpeed = isSpeedBoostActive and boostedSpeed or normalSpeed
 end
 
+-- دالة تبديل القفز اللانهائي
 local function toggleInfiniteJump()
     isInfiniteJumpActive = not isInfiniteJumpActive
     jumpButton.Text = isInfiniteJumpActive and "Infinite Jump: ON" or "Infinite Jump: OFF"
     jumpButton.BackgroundColor3 = isInfiniteJumpActive and Color3.new(0.8, 0.2, 0.2) or Color3.new(0.2, 0.6, 0.8)
 end
 
+-- دالة تبديل حجم اللاعبين (للرؤية فقط)
+local function togglePlayerSize()
+    isPlayerSizeBoostActive = not isPlayerSizeBoostActive
+    sizeButton.Text = isPlayerSizeBoostActive and "Big Players (View Only): ON" or "Big Players (View Only): OFF"
+    sizeButton.BackgroundColor3 = isPlayerSizeBoostActive and Color3.new(0.8, 0.2, 0.2) or Color3.new(0.2, 0.6, 0.8)
+    resizePlayers()
+end
+
+-- ربط الأحداث
 openButton.MouseButton1Click:Connect(toggleGui)
 closeButton.MouseButton1Click:Connect(toggleGui)
 expandButton.MouseButton1Click:Connect(toggleExpand)
 speedButton.MouseButton1Click:Connect(toggleSpeed)
 jumpButton.MouseButton1Click:Connect(toggleInfiniteJump)
+sizeButton.MouseButton1Click:Connect(togglePlayerSize)
 
-RunService.RenderStepped:Connect(expandHitboxes)
+-- تحديث الهيت بوكس وحجم اللاعبين باستمرار
+RunService.RenderStepped:Connect(function()
+    expandHitboxes()
+    if isPlayerSizeBoostActive then
+        resizePlayers()
+    end
+end)
 
+-- تفعيل القفز اللانهائي
 UserInputService.JumpRequest:Connect(function()
     if isInfiniteJumpActive then
         humanoid:ChangeState(Enum.HumanoidStateType.Jumping)
     end
 end)
 
--- Dragging functionality
+-- إمكانية سحب النافذة
 local dragging
 local dragInput
 local dragStart
@@ -166,5 +242,21 @@ end)
 UserInputService.InputChanged:Connect(function(input)
     if input == dragInput and dragging then
         update(input)
+    end
+end)
+
+-- إعادة تطبيق الميزات عند إعادة توليد الشخصية
+player.CharacterAdded:Connect(function(newCharacter)
+    character = newCharacter
+    humanoid = newCharacter:WaitForChild("Humanoid")
+    
+    -- إعادة تطبيق إعدادات السرعة
+    humanoid.WalkSpeed = isSpeedBoostActive and boostedSpeed or normalSpeed
+    
+    -- إعادة تطبيق إعدادات القفز اللانهائي
+    if isInfiniteJumpActive then
+        UserInputService.JumpRequest:Connect(function()
+            humanoid:ChangeState(Enum.HumanoidStateType.Jumping)
+        end)
     end
 end)
