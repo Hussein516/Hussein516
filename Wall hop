@@ -1,0 +1,92 @@
+-- سكربت Wall Hop لروبلوكس
+-- صنع بواسطة maalek_1234
+
+local Players = game:GetService("Players")
+local UserInputService = game:GetService("UserInputService")
+local RunService = game:GetService("RunService")
+
+-- إنشاء زر قابل للتحريك مرة واحدة
+local button = Instance.new("Part")
+button.Name = "WallHopButton"
+button.Size = Vector3.new(4, 1, 4)
+button.Position = Vector3.new(0, 5, 0)
+button.Anchored = false
+button.CanCollide = true
+button.BrickColor = BrickColor.new("Bright green")
+button.Shape = Enum.PartType.Cylinder
+button.TopSurface = Enum.SurfaceType.Smooth
+button.BottomSurface = Enum.SurfaceType.Smooth
+button.Parent = workspace
+
+local clickDetector = Instance.new("ClickDetector")
+clickDetector.Parent = button
+
+local moved = false
+local originalPosition = button.Position
+
+-- وظيفة لتحريك الزر مرة واحدة
+local function moveButton(player)
+    if not moved then
+        moved = true
+        button.BrickColor = BrickColor.new("Bright red")
+        
+        -- جعل الزر يتحرك للأعلى قليلاً ثم يسقط
+        button.Anchored = true
+        button.Position = button.Position + Vector3.new(0, 2, 0)
+        wait(0.5)
+        button.Anchored = false
+        
+        -- منع اللاعبين الآخرين من تحريك الزر
+        clickDetector.MaxActivationDistance = 0
+    end
+end
+
+-- متغيرات للسير على الهواء
+local wallHopEnabled = false
+local wallHopHeight = 0
+local connections = {}
+
+-- وظيفة تفعيل/إلغاء سير الهواء
+local function toggleWallHop(player, height)
+    wallHopEnabled = not wallHopEnabled
+    wallHopHeight = height
+    
+    if wallHopEnabled then
+        player.Character.Humanoid:SetStateEnabled(Enum.HumanoidStateType.Freefall, false)
+        
+        -- إنشاء اتصال لتحديث الموضع
+        local connection = RunService.Heartbeat:Connect(function()
+            if player.Character and player.Character:FindFirstChild("HumanoidRootPart") then
+                local hrp = player.Character.HumanoidRootPart
+                hrp.Position = Vector3.new(hrp.Position.X, wallHopHeight, hrp.Position.Z)
+                hrp.Velocity = Vector3.new(hrp.Velocity.X, 0, hrp.Velocity.Z)
+            end
+        end)
+        
+        table.insert(connections, connection)
+    else
+        player.Character.Humanoid:SetStateEnabled(Enum.HumanoidStateType.Freefall, true)
+        
+        -- قطع جميع الاتصالات
+        for _, conn in ipairs(connections) do
+            conn:Disconnect()
+        end
+        connections = {}
+    end
+end
+
+-- تفعيل الزر عند النقر
+clickDetector.MouseClick:Connect(function(player)
+    moveButton(player)
+    
+    -- تحديد ارتفاع الزر عند النقر
+    local clickHeight = button.Position.Y
+    toggleWallHop(player, clickHeight)
+end)
+
+-- إعادة تعيين الزر عند إعادة تشغيل الخادم
+game:BindToClose(function()
+    button:Destroy()
+end)
+
+print("تم تحميل سكربت Wall Hop بنجاح!")
