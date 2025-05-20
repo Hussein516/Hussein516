@@ -1,4 +1,4 @@
---صنع بواسطة maalek_1234
+--صنع بواسطة maalek_1234 
 local player = game.Players.LocalPlayer
 
 -- إنشاء واجهة المستخدم
