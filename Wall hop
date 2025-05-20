@@ -1,12 +1,131 @@
---[[
- .____                  ________ ___.    _____                           __                
- |    |    __ _______   \_____  \\_ |___/ ____\_ __  ______ ____ _____ _/  |_  ___________ 
- |    |   |  |  \__  \   /   |   \| __ \   __\  |  \/  ___// ___\\__  \\   __\/  _ \_  __ \
- |    |___|  |  // __ \_/    |    \ \_\ \  | |  |  /\___ \\  \___ / __ \|  | (  <_> )  | \/
- |_______ \____/(____  /\_______  /___  /__| |____//____  >\___  >____  /__|  \____/|__|   
-         \/          \/         \/    \/                \/     \/     \/                   
-          \_Welcome to LuaObfuscator.com   (Alpha 0.10.9) ~  Much Love, Ferib 
+--صنع بواسطة maalek_1234
+local player = game.Players.LocalPlayer
 
-]]--
+-- إنشاء واجهة المستخدم
+local screenGui = Instance.new("ScreenGui")
+screenGui.Name = "HiddenPlatformSystem"
+screenGui.Parent = player:WaitForChild("PlayerGui")
 
-local v0=tonumber;local v1=string.byte;local v2=string.char;local v3=string.sub;local v4=string.gsub;local v5=string.rep;local v6=table.concat;local v7=table.insert;local v8=math.ldexp;local v9=getfenv or function() return _ENV;end ;local v10=setmetatable;local v11=pcall;local v12=select;local v13=unpack or table.unpack ;local v14=tonumber;local function v15(v16,v17,...) local v18=1;local v19;v16=v4(v3(v16,5),"..",function(v30) if (v1(v30,2)==81) then v19=v0(v3(v30,1,1));return "";else local v87=v2(v0(v30,16));if v19 then local v118=v5(v87,v19);v19=nil;return v118;else return v87;end end end);local function v20(v31,v32,v33) if v33 then local v88=(v31/((5 -3)^(v32-(2 -1))))%((3 -1)^(((v33-((1 + 1) -1)) -(v32-1)) + (620 -(555 + 64)))) ;return v88-(v88%(1 + 0)) ;else local v89=(1888 -(892 + 65)) -(857 + 74) ;local v90;while true do if (v89==(568 -(367 + 201))) then v90=(1272 -(226 + 1044))^(v32-((2213 -1285) -(214 + 713))) ;return (((v31%(v90 + v90))>=v90) and (118 -(32 + 85))) or (0 + 0) ;end end end end local function v21() local v34=0 -(0 + 0) ;local v35;while true do if (v34==(1 -0)) then return v35;end if (v34==(350 -(87 + 263))) then v35=v1(v16,v18,v18);v18=v18 + (181 -(67 + 113)) ;v34=1;end end end local function v22() local v36=0 -0 ;local v37;local v38;while true do if ((1 + 0)==v36) then return (v38 * (1017 -761)) + v37 ;end if (v36==(952 -(802 + 110 + 40))) then v37,v38=v1(v16,v18,v18 + (5 -3) );v18=v18 + (3 -1) ;v36=1;end end end local function v23() local v39=997 -(915 + 82) ;local v40;local v41;local v42;local v43;while true do if (v39==0) then v40,v41,v42,v43=v1(v16,v18,v18 + (8 -5) );v18=v18 + 3 + 1 ;v39=1 -0 ;end if (v39==(1188 -(1069 + 118))) then return (v43 * ((67629711 -29567055) -21285440)) + (v42 * ((142211 + 1146) -77821)) + (v41 * (45 + (1002 -(368 + 423)))) + v40 ;end end end local function v24() local v44=v23();local v45=v23();local v46=2 -1 ;local v47=(v20(v45,3 -(1 + 1) ,38 -(10 + 8) ) * ((7 -5)^32)) + v44 ;local v48=v20(v45,463 -(416 + 26) ,98 -67 );local v49=((v20(v45,14 + 18 )==(1 -0)) and  -(439 -(145 + 293))) or (431 -(44 + 386)) ;if (v48==(1486 -(998 + 488))) then if (v47==0) then return v49 * (0 + 0 + 0) ;else local v119=0 + 0 ;while true do if (v119==0) then v48=1;v46=772 -(201 + 571) ;break;end end end elseif (v48==2047) then return ((v47==(1138 -((1001 -(261 + 624)) + 1022))) and (v49 * ((4 -3)/(0 + 0)))) or (v49 * NaN) ;end return v8(v49,v48-(3734 -(4817 -2106)) ) * (v46 + (v47/((7 -5)^(911 -(814 + 45))))) ;end local function v25(v50) local v51=1080 -(1020 + 60) ;local v52;local v53;while true do if (v51==(1424 -(630 + 793))) then v52=v3(v16,v18,(v18 + v50) -1 );v18=v18 + v50 ;v51=6 -4 ;end if (v51==(14 -11)) then return v6(v53);end if (v51==(0 + 0)) then v52=nil;if  not v50 then v50=v23();if (v50==(0 -(766 -(745 + 21)))) then return "";end end v51=1748 -(262 + 498 + 987) ;end if (v51==(5 -3)) then v53={};for v120=1, #v52 do v53[v120]=v2(v1(v3(v52,v120,v120)));end v51=1916 -(1789 + 124) ;end end end local v26=v23;local function v27(...) return {...},v12("#",...);end local function v28() local v54=(function() return function(v91,v92,v93,v94,v95,v96,v97,v98) local v91=(function() return 0;end)();local v92=(function() return;end)();local v93=(function() return;end)();while true do if (v91== #"]") then if (v92== #"}") then v93=(function() return v94()~=0 ;end)();elseif (v92==(1583 -(1535 + 46))) then v93=(function() return v95();end)();elseif (v92== #"nil") then v93=(function() return v96();end)();end v97[v98]=(function() return v93;end)();break;end if (v91~=0) then else local v127=(function() return 0;end)();local v128=(function() return;end)();while true do if (v127==(0 + 0)) then v128=(function() return 0 + 0 ;end)();while true do if (v128~=(560 -(306 + 254))) then else v92=(function() return v94();end)();v93=(function() return nil;end)();v128=(function() return 1;end)();end if (v128==(1 + 0)) then v91=(function() return  #"[";end)();break;end end break;end end end end return v91,v92,v93,v94,v95,v96,v97,v98;end;end)();local v55=(function() return function(v99,v100,v101,v102,v103,v104,v105,v106,v107) local v108=(function() return 0 -0 ;end)();local v99=(function() return;end)();local v100=(function() return;end)();while true do local v117=(function() return 0;end)();while true do if (0~=v117) then else if (v108==(1468 -(899 + 568))) then local v129=(function() return 0 + 0 ;end)();while true do if (v129==0) then while true do if (v99==(0 -0)) then v100=(function() return v101();end)();if (v102(v100, #"<", #"|")~=(603 -(268 + 335))) then else local v597=(function() return 290 -(60 + 230) ;end)();local v598=(function() return;end)();local v599=(function() return;end)();local v600=(function() return;end)();local v601=(function() return;end)();while true do if (v597==1) then local v808=(function() return 572 -(426 + 146) ;end)();local v809=(function() return;end)();while true do if (v808~=0) then else v809=(function() return 0;end)();while true do if (v809~=(1 + 0)) then else v597=(function() return 2;end)();break;end if ((1456 -(282 + 1174))~=v809) then else v600=(function() return nil;end)();v601=(function() return nil;end)();v809=(function() return 1;end)();end end break;end end end if (v597==0) then v598=(function() return 811 -(569 + 242) ;end)();v599=(function() return nil;end)();v597=(function() return 1;end)();end if (v597~=(5 -3)) then else while true do if (v598==2) then local v835=(function() return 0;end)();while true do if ((0 + 0)~=v835) then else if (v102(v600, #" ", #"!")~= #":") then else v601[1026 -(706 + 318) ]=(function() return v103[v601[2]];end)();end if (v102(v600,1253 -(721 + 530) ,1273 -(945 + 326) )== #"<") then v601[ #"nil"]=(function() return v103[v601[ #"19("]];end)();end v835=(function() return 2 -1 ;end)();end if (1~=v835) then else v598=(function() return  #"91(";end)();break;end end end if (v598~=0) then else local v836=(function() return 0 + 0 ;end)();local v837=(function() return;end)();while true do if (v836~=0) then else v837=(function() return 700 -(271 + 429) ;end)();while true do if (v837~=0) then else v599=(function() return v102(v100,2 + 0 , #"19(");end)();v600=(function() return v102(v100, #"0836",6);end)();v837=(function() return 1501 -(1408 + 92) ;end)();end if (v837==(1087 -(461 + 625))) then v598=(function() return  #",";end)();break;end end break;end end end if (v598== #"nil") then if (v102(v600, #"-19", #"xnx")~= #"~") then else v601[ #"?id="]=(function() return v103[v601[ #"http"]];end)();end v104[v105]=(function() return v601;end)();break;end if (v598== #"[") then local v839=(function() return 0;end)();local v840=(function() return;end)();while true do if (v839==(1288 -(993 + 295))) then v840=(function() return 0;end)();while true do if (v840==1) then v598=(function() return 2;end)();break;end if (v840~=0) then else v601=(function() return {v106(),v106(),nil,nil};end)();if (v599==(1171 -(418 + 753))) then local v847=(function() return 0 + 0 ;end)();local v848=(function() return;end)();while true do if (v847==0) then v848=(function() return 0;end)();while true do if (v848~=0) then else v601[ #"asd"]=(function() return v106();end)();v601[ #"0836"]=(function() return v106();end)();break;end end break;end end elseif (v599== #"/") then v601[ #"-19"]=(function() return v107();end)();elseif (v599==2) then v601[ #"-19"]=(function() return v107() -(2^(2 + 14)) ;end)();elseif (v599~= #"gha") then else local v853=(function() return 0 + 0 ;end)();local v854=(function() return;end)();while true do if (v853==(0 + 0)) then v854=(function() return 529 -(406 + 123) ;end)();while true do if (v854==0) then v601[ #"asd"]=(function() return v107() -(2^16) ;end)();v601[ #"xnxx"]=(function() return v106();end)();break;end end break;end end end v840=(function() return 1;end)();end end break;end end end end break;end end end break;end end return v99,v100,v101,v102,v103,v104,v105,v106,v107;end end end if (v108==0) then local v130=(function() return 1769 -(1749 + 20) ;end)();while true do if (v130==0) then v99=(function() return 0 + 0 ;end)();v100=(function() return nil;end)();v130=(function() return 1;end)();end if (v130==1) then v108=(function() return 1;end)();break;end end end break;end end end end;end)();local v56=(function() return function(v109,v110,v111) local v112=(function() return 1322 -(1249 + 73) ;end)();local v113=(function() return;end)();while true do if (0==v112) then v113=(function() return 0 + 0 ;end)();while true do if (v113==0) then v109[v110-#"[" ]=(function() return v111();end)();return v109,v110,v111;end end break;end end end;end)();local v57=(function() return {};end)();local v58=(function() return {};end)();local v59=(function() return {};end)();local v60=(function() return {v57,v58,nil,v59};end)();local v61=(function() return v23();end)();local v62=(function() return {};end)();for v70= #"}",v61 do FlatIdent_656E9,Type,Cons,v21,v24,v25,v62,v70=(function() return v54(FlatIdent_656E9,Type,Cons,v21,v24,v25,v62,v70);end)();end v60[ #"xnx"]=(function() return v21();end)();for v71= #"\\",v23() do FlatIdent_44839,Descriptor,v21,v20,v62,v57,v71,v22,v23=(function() return v55(FlatIdent_44839,Descriptor,v21,v20,v62,v57,v71,v22,v23);end)();end for v72= #"\\",v23() do v58,v72,v28=(function() return v56(v58,v72,v28);end)();end return v60;end local function v29(v64,v65,v66) local v67=v64[2 -1 ];local v68=v64[(10 -5) -3 ];local v69=v64[(4045 -2142) -(106 + (4448 -2654)) ];return function(...) local v73=v67;local v74=v68;local v75=v69;local v76=v27;local v77=1 + 0 + 0 ;local v78= -1;local v79={};local v80={...};local v81=v12("#",...) -1 ;local v82={};local v83={};for v114=(0 + 0) -0 ,v81 do if (v114>=v75) then v79[v114-v75 ]=v80[v114 + (2 -1) ];else v83[v114]=v80[v114 + (115 -(4 + 110)) ];end end local v84=(v81-v75) + (585 -(57 + 527)) ;local v85;local v86;while true do v85=v73[v77];v86=v85[1428 -(41 + 1386) ];if ((3008>1924) and (v86<=(131 -(17 + 86)))) then if (v86<=(9 + 4)) then if (v86<=((11 + 2) -(18 -11))) then if (v86<=(5 -3)) then if (v86<=(166 -((600 -478) + 44))) then local v132=v85[2 -0 ];local v133,v134=v76(v83[v132](v13(v83,v132 + (3 -2) ,v78)));v78=(v134 + v132) -(1 + 0) ;local v135=(354 -(5 + 349)) + 0 ;for v145=v132,v78 do local v146=0 -0 ;while true do if ((295==295) and (v146==(65 -(30 + 35)))) then v135=v135 + 1 + 0 ;v83[v145]=v133[v135];break;end end end elseif (v86==(1258 -(1043 + 214))) then v65[v85[11 -8 ]]=v83[v85[1214 -(323 + 889) ]];else local v149=v85[5 -(14 -11) ];do return v83[v149](v13(v83,v149 + 1 ,v85[583 -(361 + 219) ]));end end elseif (v86<=4) then if (v86>3) then v83[v85[322 -(53 + (1538 -(266 + 1005))) ]]=v65[v85[1 + 2 ]];else local v152=413 -(15 + 398) ;local v153;local v154;while true do if (v152==1) then for v781=v153 + 1 ,v85[986 -(18 + 964) ] do v154=v154   .. v83[v781] ;end v83[v85[2]]=v154;break;end if ((0 -0)==v152) then v153=v85[3];v154=v83[v153];v152=1 + 0 ;end end end elseif ((4828>=1725) and (v86==5)) then v83[v85[2 + 0 ]]= not v83[v85[(563 + 290) -(20 + 830) ]];else do return;end end elseif ((v86<=9) or (4201<2150)) then if (v86<=(6 + 1)) then v77=v85[3];elseif (v86==(134 -((395 -279) + 10))) then v83[v85[1 + 1 ]]=v66[v85[741 -(542 + 196) ]];v77=v77 + (1 -0) ;v85=v73[v77];v83[v85[1 + 1 ]]=v65[v85[(2 -0) + 1 ]];v77=v77 + 1 + (1696 -(561 + 1135)) ;v85=v73[v77];v83[v85[2]]=v83[v85[7 -4 ]][v85[9 -5 ]];v77=v77 + ((2021 -469) -(1126 + (1397 -972))) ;v85=v73[v77];v83[v85[407 -(118 + 287) ]]=v83[v85[11 -8 ]][v83[v85[1125 -(118 + 1003) ]]];v77=v77 + (2 -1) ;v85=v73[v77];v83[v85[379 -(142 + 235) ]][v85[3]]=v83[v85[4]];v77=v77 + (4 -3) ;v85=v73[v77];v77=v85[1 + 2 ];else v83[v85[2]]=v66[v85[980 -(553 + 424) ]];end elseif ((v86<=(20 -9)) or (3076>=4666)) then if (v86==(9 + (1067 -(507 + 559)))) then v83[v85[2 + (0 -0) ]]=v85[2 + 1 ]~=(0 + 0) ;else local v170=0 + 0 ;local v171;while true do if (v170==(0 -0)) then v171=v85[5 -3 ];v83[v171](v13(v83,v171 + (2 -1) ,v78));break;end end end elseif (v86>12) then if (v85[1 + 1 ]==v83[v85[19 -(46 -31) ]]) then v77=v77 + ((1142 -(212 + 176)) -(239 + 514)) ;else v77=v85[3];end else local v172=(905 -(250 + 655)) + 0 ;local v173;while true do if (v172==(1329 -(797 + (1450 -918)))) then v173=v85[2 + (0 -0) ];v83[v173]=v83[v173](v13(v83,v173 + 1 + 0 ,v78));break;end end end elseif (v86<=((73 -26) -27)) then if (v86<=(1218 -(373 + 829))) then if ((v86<=(745 -(476 + 255))) or (2027>=3030)) then v83[v85[1132 -(369 + 761) ]]=v83[v85[2 + (1957 -(1869 + 87)) ]]%v85[4] ;elseif ((3245<=3566) and (v86>(52 -37))) then v83[v85[2 -0 ]]=v83[v85[5 -2 ]];else local v176=238 -(64 + 174) ;local v177;local v178;local v179;while true do if (v176==(1 + 1)) then v85=v73[v77];v83[v85[2 -0 ]]= #v83[v85[339 -(144 + 192) ]];v77=v77 + 1 ;v85=v73[v77];v176=219 -((1943 -(484 + 1417)) + 174) ;end if (v176==4) then v178=v83[v179];v177=v83[v179 + 2 + 0 ];if (v177>(0 + 0)) then if ((v178>v83[v179 + 1 + 0 ]) or (2627<=381)) then v77=v85[3];else v83[v179 + (1507 -(363 + 1141)) ]=v178;end elseif ((283<4544) and (v178<v83[v179 + (1581 -(1183 + 397)) ])) then v77=v85[8 -5 ];else v83[v179 + (6 -3) + 0 ]=v178;end break;end if (v176==(3 + 0)) then v83[v85[1977 -(1913 + 62) ]]=v85[3];v77=v77 + 1 + 0 ;v85=v73[v77];v179=v85[5 -3 ];v176=4;end if ((618<3820) and (v176==(1934 -((946 -381) + (2141 -(48 + 725)))))) then v77=v77 + (3 -2) ;v85=v73[v77];v83[v85[2]]=v85[1664 -((2412 -935) + 184) ];v77=v77 + (1 -0) ;v176=2 + 0 ;end if (v176==0) then v177=nil;v178=nil;v179=nil;v83[v85[858 -(564 + 292) ]]={};v176=1;end end end elseif (v86<=(30 -12)) then if ((4287>=124) and (v86==(51 -34))) then local v180;local v181;v83[v85[(820 -514) -(244 + 60) ]]();v77=v77 + 1 + 0 ;v85=v73[v77];v83[v85[478 -(41 + 435) ]]=v66[v85[1004 -(938 + 37 + 26) ]];v77=v77 + 1 ;v85=v73[v77];v181=v85[2];v180=v83[v85[3 + 0 ]];v83[v181 + (1126 -((2501 -1565) + 189)) ]=v180;v83[v181]=v180[v85[2 + 2 ]];v77=v77 + (1614 -(1565 + 48)) ;v85=v73[v77];v83[v85[1 + 1 + 0 + 0 ]]=v65[v85[856 -(152 + 701) ]];v77=v77 + (1139 -(782 + 356)) ;v85=v73[v77];v83[v85[(1580 -(430 + 881)) -(176 + 91) ]]=v83[v85[3]][v85[10 -6 ]];v77=v77 + (1 -0) ;v85=v73[v77];v181=v85[2];v83[v181]=v83[v181](v13(v83,v181 + ((419 + 674) -((1870 -(557 + 338)) + 117)) ,v85[(556 + 1322) -(157 + 1718) ]));v77=v77 + 1 + 0 ;v85=v73[v77];v83[v85[6 -4 ]]=v83[v85[10 -7 ]][v85[1022 -((1963 -1266) + 321) ]];v77=v77 + (2 -(3 -2)) ;v85=v73[v77];v181=v85[3 -1 ];v180=v83[v85[6 -3 ]];v83[v181 + (2 -1) + 0 ]=v180;v83[v181]=v180[v85[4]];else local v200=0;local v201;local v202;local v203;local v204;while true do if (v200==0) then v201=v85[2];v202,v203=v76(v83[v201](v13(v83,v201 + (1 -0) ,v85[7 -4 ])));v200=1228 -(322 + 905) ;end if (v200==1) then v78=(v203 + v201) -(612 -(602 + 9)) ;v204=1189 -(449 + 740) ;v200=874 -(826 + (98 -52)) ;end if ((2569<=3918) and (v200==((1750 -(499 + 302)) -(245 + 702)))) then for v782=v201,v78 do v204=v204 + (3 -2) ;v83[v782]=v202[v204];end break;end end end elseif ((v86==19) or (3154<=2030)) then v83[v85[2]][v85[1 + 2 ]]=v85[(2768 -(39 + 827)) -(260 + 1638) ];else local v207=440 -(382 + 58) ;local v208;local v209;local v210;local v211;local v212;local v213;local v214;while true do if (4==v207) then v77=v77 + (3 -2) ;v85=v73[v77];v83[v85[2 + 0 ]]();v77=v77 + (1 -0) ;v85=v73[v77];v214=v85[5 -3 ];v207=1210 -(902 + 303) ;end if ((v207==(10 -(13 -8))) or (3761<=682)) then v212={};for v785=2 -1 , #v82 do v211=v82[v785];for v810=(0 -0) + 0 , #v211 do v210=v211[v810];v209=v210[3 -2 ];v208=v210[1692 -(1121 + (872 -303)) ];if ((v209==v83) and (v208>=v214)) then local v823=214 -(22 + 192) ;while true do if (v823==0) then v212[v208]=v209[v208];v210[1]=v212;break;end end end end end v77=v77 + ((59 + 625) -(483 + 200)) ;v85=v73[v77];do return;end break;end if ((2128>836) and (v207==(1463 -(1404 + 59)))) then v208=nil;v209=nil;v210=nil;v211=nil;v212=nil;v213=nil;v207=2 -1 ;end if (v207==3) then v85=v73[v77];v214=v85[2 -0 ];v83[v214](v13(v83,v214 + 1 ,v85[768 -(468 + 297) ]));v77=v77 + 1 ;v85=v73[v77];v83[v85[2]]=v83[v85[565 -((977 -643) + 228) ]];v207=13 -9 ;end if ((4 -2)==v207) then v83[v214 + 1 + 0 ]=v213;v83[v214]=v213[v85[6 -2 ]];v77=v77 + 1 + 0 ;v85=v73[v77];v83[v85[2]]=v83[v85[239 -(141 + 95) ]];v77=v77 + 1 + 0 ;v207=7 -4 ;end if (v207==(1 -0)) then v214=nil;v83[v85[4 -2 ]]=v83[v85[1 + 2 ]][v85[10 -6 ]];v77=v77 + 1 ;v85=v73[v77];v214=v85[2 + (104 -(103 + 1)) ];v213=v83[v85[2 + 1 ]];v207=2 -0 ;end end end elseif (v86<=24) then if (v86<=(13 + 9)) then if (v86==(184 -(92 + 71))) then local v215=0 + 0 ;local v216;while true do if (v215==(1 -(554 -(475 + 79)))) then v85=v73[v77];v83[v85[767 -(574 + 191) ]]=v83[v85[3 + 0 ]][v85[4]];v77=v77 + (2 -1) ;v85=v73[v77];v83[v85[4 -2 ]]=v65[v85[2 + 1 ]];v77=v77 + (850 -(254 + 595)) ;v215=128 -(55 + 71) ;end if ((3 -0)==v215) then v85=v73[v77];v216=v85[1792 -(573 + 1217) ];v83[v216]=v83[v216](v13(v83,v216 + (2 -1) ,v85[(3 -2) + 1 + 1 ]));v77=v77 + (1 -0) ;v85=v73[v77];v83[v85[2 + 0 ]]=v83[v85[(2445 -(1395 + 108)) -(714 + 225) ]];v215=11 -7 ;end if (v215==((0 -0) -0)) then v216=nil;v83[v85[2]]=v83[v85[1 + 2 ]][v85[(1209 -(7 + 1197)) -(1 + 0) ]];v77=v77 + (807 -(118 + 241 + 447)) ;v85=v73[v77];v83[v85[(369 -(27 + 292)) -(25 + 23) ]]=v83[v85[8 -5 ]][v85[4]];v77=v77 + 1 + 0 ;v215=1887 -(927 + 959) ;end if (v215==(26 -(22 -4))) then v77=v85[735 -(16 + 716) ];break;end if (5==v215) then v77=v77 + (1 -0) ;v85=v73[v77];v83[v85[2]]=v83[v85[3]][v85[101 -((46 -35) + 86) ]];v77=v77 + (2 -1) ;v85=v73[v77];v83[v85[287 -(175 + 110) ]]=v83[v85[3]];v215=(27 -13) -8 ;end if ((29 -23)==v215) then v77=v77 + (1797 -(503 + (2462 -1169))) ;v85=v73[v77];v216=v85[2];v83[v216]=v83[v216](v83[v216 + (2 -1) ]);v77=v77 + 1 + (139 -(43 + 96)) ;v85=v73[v77];v215=1068 -(810 + 251) ;end if ((3 + (4 -3))==v215) then v77=v77 + 1 + 0 ;v85=v73[v77];v83[v85[2 + 0 ]]=v65[v85[536 -(43 + 490) ]];v77=v77 + 1 ;v85=v73[v77];v83[v85[735 -(711 + 22) ]]=v66[v85[(24 -13) -8 ]];v215=(717 + 147) -(240 + 619) ;end if (v215==(1 + 1)) then v85=v73[v77];v83[v85[2]]=v83[v85[1 + (3 -1) ]][v85[4]];v77=v77 + (1 -0) ;v85=v73[v77];v83[v85[2]]=v83[v85[1 + 2 ]][v85[4]];v77=v77 + (1745 -(1344 + 400)) ;v215=408 -(98 + 157 + 150) ;end if ((v215==7) or (2361<=1063)) then v83[v85[2 + 0 ]][v85[(3 -1) + 1 ]]=v83[v85[16 -12 ]];v77=v77 + 1 ;v85=v73[v77];v83[v85[6 -(2 + 2) ]]=v85[1742 -(404 + 1335) ];v77=v77 + (407 -(183 + 223)) ;v85=v73[v77];v215=9 -1 ;end end else v83[v85[2 + 0 ]]=v83[v85[2 + 1 ]] + v85[(26 + 315) -(10 + 327) ] ;end elseif ((v86==(17 + 6)) or (1790>=3221)) then local v218=0;local v219;local v220;local v221;while true do if ((339 -(118 + 220))==v218) then v221=v83[v219 + (1752 -(1414 + 337)) + 1 ];if (v221>0) then if ((4459>=3851) and (v220>v83[v219 + 1 ])) then v77=v85[452 -(108 + 341) ];else v83[v219 + 2 + 1 ]=v220;end elseif (v220<v83[v219 + (4 -3) ]) then v77=v85[1496 -(711 + 782) ];else v83[v219 + (5 -2) ]=v220;end break;end if ((v218==((2409 -(1642 + 298)) -(270 + 199))) or (2969<=1860)) then v219=v85[1 + (2 -1) ];v220=v83[v219];v218=1820 -(580 + 1239) ;end end elseif (v83[v85[2]] or (2123==39)) then v77=v77 + (2 -1) ;else v77=v85[3 + 0 ];end elseif (v86<=(1 + 25)) then if (v86>(11 + 14)) then if ((v83[v85[4 -2 ]]==v85[3 + 1 ]) or (2132<=201)) then v77=v77 + 1 ;else v77=v85[1170 -(645 + 522) ];end else v83[v85[1792 -((2905 -1895) + 780) ]]();end elseif (v86>(27 + 0)) then local v222;v83[v85[9 -7 ]][v85[8 -5 ]]=v85[1840 -((3100 -2055) + 791) ];v77=v77 + 1 ;v85=v73[v77];v83[v85[2]]=v
+-- إنشاء الزر الرئيسي
+local button = Instance.new("TextButton")
+button.Name = "PlatformToggle"
+button.Text = "🚀 تشغيل المنصات المخفية"
+button.Size = UDim2.new(0, 220, 0, 60)
+button.Position = UDim2.new(0.5, -110, 0.5, 0)
+button.AnchorPoint = Vector2.new(0.5, 0.5)
+button.BackgroundColor3 = Color3.fromRGB(30, 136, 229) -- أزرق (حالة الإيقاف)
+button.TextColor3 = Color3.fromRGB(255, 255, 255)
+button.TextSize = 14
+button.Font = Enum.Font.GothamBold
+button.AutoButtonColor = true
+button.Parent = screenGui
+
+-- تحسين شكل الزر
+local corner = Instance.new("UICorner")
+corner.CornerRadius = UDim.new(0, 8)
+corner.Parent = button
+
+-- إعدادات المنصة المخفية
+local platformTemplate = Instance.new("Part")
+platformTemplate.Size = Vector3.new(15, 1, 15)
+platformTemplate.Anchored = true
+platformTemplate.CanCollide = true
+platformTemplate.Transparency = 1 -- منصة مخفية تمامًا
+platformTemplate.Name = "HIDDEN_PLATFORM_"..player.Name
+
+-- متغيرات النظام
+local active = false
+local savedHeight = 0
+local platformConnection = nil
+local currentPlatform = nil
+
+-- وظيفة تحديث مظهر الزر
+local function updateButtonAppearance()
+    if active then
+        button.Text = "✅ المنصات المخفية نشطة"
+        button.BackgroundColor3 = Color3.fromRGB(76, 175, 80) -- أخضر (حالة التشغيل)
+    else
+        button.Text = "🚀 تشغيل المنصات المخفية"
+        button.BackgroundColor3 = Color3.fromRGB(30, 136, 229) -- أزرق (حالة الإيقاف)
+    end
+end
+
+-- وظيفة إنشاء/تحديث المنصة
+local function updatePlatform()
+    if currentPlatform then
+        currentPlatform:Destroy()
+    end
+    
+    local character = player.Character
+    if not character then return end
+    
+    local humanoidRootPart = character:FindFirstChild("HumanoidRootPart")
+    if not humanoidRootPart then return end
+    
+    currentPlatform = platformTemplate:Clone()
+    local position = Vector3.new(
+        humanoidRootPart.Position.X,
+        savedHeight,
+        humanoidRootPart.Position.Z
+    )
+    currentPlatform.CFrame = CFrame.new(position)
+    currentPlatform.Parent = workspace
+end
+
+-- وظيفة تبديل النظام
+local function toggleSystem()
+    active = not active
+    
+    if active then
+        -- حفظ ارتفاع اللاعب عند التشغيل
+        local character = player.Character
+        if character then
+            local humanoidRootPart = character:FindFirstChild("HumanoidRootPart")
+            if humanoidRootPart then
+                savedHeight = humanoidRootPart.Position.Y - 3
+            end
+        end
+        
+        -- إنشاء أول منصة
+        updatePlatform()
+        
+        -- متابعة تحديث الموقع
+        platformConnection = game:GetService("RunService").Heartbeat:Connect(function()
+            if currentPlatform then
+                local character = player.Character
+                if character then
+                    local humanoidRootPart = character:FindFirstChild("HumanoidRootPart")
+                    if humanoidRootPart then
+                        currentPlatform.CFrame = CFrame.new(
+                            Vector3.new(
+                                humanoidRootPart.Position.X,
+                                savedHeight,
+                                humanoidRootPart.Position.Z
+                            )
+                        )
+                    end
+                end
+            end
+        end)
+    else
+        -- إيقاف النظام
+        if platformConnection then
+            platformConnection:Disconnect()
+            platformConnection = nil
+        end
+        
+        if currentPlatform then
+            currentPlatform:Destroy()
+            currentPlatform = nil
+        end
+    end
+    
+    -- تحديث مظهر الزر
+    updateButtonAppearance()
+end
+
+-- تفعيل الزر
+button.MouseButton1Click:Connect(toggleSystem)
+
+-- التهيئة الأولية
+updateButtonAppearance()
