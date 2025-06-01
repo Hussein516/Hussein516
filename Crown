@@ -4,18 +4,29 @@ local UserInputService = game:GetService("UserInputService")
 
 -- إعدادات الميزات
 local hitboxSize = Vector3.new(12, 12, 12)
-local playerSizeMultiplier = 5 -- حجم اللاعب بعد التكبير
+local playerSizeMultiplier = 5
 local isExpanded = false
 local isSpeedBoostActive = false
 local isInfiniteJumpActive = false
 local isPlayerSizeBoostActive = false
 local normalSpeed = 16
-local boostedSpeed = normalSpeed * 8 -- تم التغيير من 6 إلى 8
+local boostedSpeed = normalSpeed * 8
 
--- الحصول على شخصية اللاعب
+-- متغيرات اللاعب والشخصية
 local player = Players.LocalPlayer
-local character = player.Character or player.CharacterAdded:Wait()
-local humanoid = character:WaitForChild("Humanoid")
+local character, humanoid
+
+-- وظيفة لتحميل الشخصية
+local function loadCharacter()
+    character = player.Character or player.CharacterAdded:Wait()
+    humanoid = character:WaitForChild("Humanoid")
+    
+    -- تطبيق إعدادات السرعة عند التحميل
+    humanoid.WalkSpeed = isSpeedBoostActive and boostedSpeed or normalSpeed
+end
+
+-- تحميل الشخصية الأولي
+loadCharacter()
 
 -- إنشاء واجهة المستخدم
 local screenGui = Instance.new("ScreenGui")
@@ -23,7 +34,7 @@ screenGui.Name = "GameEnhancerGui"
 screenGui.Parent = player:WaitForChild("PlayerGui")
 
 local frame = Instance.new("Frame")
-frame.Size = UDim2.new(0, 400, 0, 350)  -- زيادة الارتفاع لإضافة زر جديد
+frame.Size = UDim2.new(0, 400, 0, 350)
 frame.Position = UDim2.new(0.5, -200, 0.5, -175)
 frame.BackgroundColor3 = Color3.new(0.2, 0.2, 0.2)
 frame.BorderSizePixel = 0
@@ -62,7 +73,7 @@ expandButton.Parent = frame
 local speedButton = Instance.new("TextButton")
 speedButton.Size = UDim2.new(0.8, 0, 0.15, 0)
 speedButton.Position = UDim2.new(0.1, 0, 0.4, 0)
-speedButton.Text = "Speed Boost (8x): OFF" -- تم التغيير من 6x إلى 8x
+speedButton.Text = "Speed Boost (8x): OFF"
 speedButton.TextSize = 18
 speedButton.TextColor3 = Color3.new(1, 1, 1)
 speedButton.BackgroundColor3 = Color3.new(0.2, 0.6, 0.8)
@@ -78,7 +89,7 @@ jumpButton.TextColor3 = Color3.new(1, 1, 1)
 jumpButton.BackgroundColor3 = Color3.new(0.2, 0.6, 0.8)
 jumpButton.Parent = frame
 
--- زر تكبير اللاعبين (للرؤية فقط)
+-- زر تكبير اللاعبين
 local sizeButton = Instance.new("TextButton")
 sizeButton.Size = UDim2.new(0.8, 0, 0.15, 0)
 sizeButton.Position = UDim2.new(0.1, 0, 0.8, 0)
@@ -96,7 +107,7 @@ openButton.TextColor3 = Color3.new(1, 1, 1)
 openButton.BackgroundColor3 = Color3.new(0.2, 0.6, 0.8)
 openButton.Parent = screenGui
 
--- دالة لتكبير/تصغير اللاعبين (للرؤية فقط)
+-- دالة لتكبير/تصغير اللاعبين
 local function resizePlayers()
     for _, otherPlayer in pairs(Players:GetPlayers()) do
         if otherPlayer ~= player and otherPlayer.Character then
@@ -105,22 +116,18 @@ local function resizePlayers()
             
             if humanoidRootPart and head then
                 if isPlayerSizeBoostActive then
-                    -- تكبير حجم اللاعبين (للرؤية فقط)
                     humanoidRootPart.Size = Vector3.new(2 * playerSizeMultiplier, 2 * playerSizeMultiplier, 1 * playerSizeMultiplier)
                     head.Size = Vector3.new(1.5 * playerSizeMultiplier, 1.5 * playerSizeMultiplier, 1.5 * playerSizeMultiplier)
                     
-                    -- تكبير الملحقات (Accessories) مثل القبعات
                     for _, accessory in pairs(otherPlayer.Character:GetChildren()) do
                         if accessory:IsA("Accessory") and accessory:FindFirstChild("Handle") then
                             accessory.Handle.Size = accessory.Handle.Size * playerSizeMultiplier
                         end
                     end
                 else
-                    -- إعادة الحجم الأصلي
                     humanoidRootPart.Size = Vector3.new(2, 2, 1)
                     head.Size = Vector3.new(1.5, 1.5, 1.5)
                     
-                    -- إعادة حجم الملحقات
                     for _, accessory in pairs(otherPlayer.Character:GetChildren()) do
                         if accessory:IsA("Accessory") and accessory:FindFirstChild("Handle") then
                             accessory.Handle.Size = accessory.Handle.Size / playerSizeMultiplier
@@ -166,9 +173,12 @@ end
 -- دالة تبديل زيادة السرعة
 local function toggleSpeed()
     isSpeedBoostActive = not isSpeedBoostActive
-    speedButton.Text = isSpeedBoostActive and "Speed Boost (8x): ON" or "Speed Boost (8x): OFF" -- تم التغيير من 6x إلى 8x
+    speedButton.Text = isSpeedBoostActive and "Speed Boost (8x): ON" or "Speed Boost (8x): OFF"
     speedButton.BackgroundColor3 = isSpeedBoostActive and Color3.new(0.8, 0.2, 0.2) or Color3.new(0.2, 0.6, 0.8)
-    humanoid.WalkSpeed = isSpeedBoostActive and boostedSpeed or normalSpeed
+    
+    if humanoid then
+        humanoid.WalkSpeed = isSpeedBoostActive and boostedSpeed or normalSpeed
+    end
 end
 
 -- دالة تبديل القفز اللانهائي
@@ -178,7 +188,7 @@ local function toggleInfiniteJump()
     jumpButton.BackgroundColor3 = isInfiniteJumpActive and Color3.new(0.8, 0.2, 0.2) or Color3.new(0.2, 0.6, 0.8)
 end
 
--- دالة تبديل حجم اللاعبين (للرؤية فقط)
+-- دالة تبديل حجم اللاعبين
 local function togglePlayerSize()
     isPlayerSizeBoostActive = not isPlayerSizeBoostActive
     sizeButton.Text = isPlayerSizeBoostActive and "Big Players (View Only): ON" or "Big Players (View Only): OFF"
@@ -194,7 +204,7 @@ speedButton.MouseButton1Click:Connect(toggleSpeed)
 jumpButton.MouseButton1Click:Connect(toggleInfiniteJump)
 sizeButton.MouseButton1Click:Connect(togglePlayerSize)
 
--- تحديث الهيت بوكس وحجم اللاعبين باستمرار
+-- تحديث الهيت بوكس وحجم اللاعبين
 RunService.RenderStepped:Connect(function()
     expandHitboxes()
     if isPlayerSizeBoostActive then
@@ -204,16 +214,13 @@ end)
 
 -- تفعيل القفز اللانهائي
 UserInputService.JumpRequest:Connect(function()
-    if isInfiniteJumpActive then
+    if isInfiniteJumpActive and humanoid then
         humanoid:ChangeState(Enum.HumanoidStateType.Jumping)
     end
 end)
 
 -- إمكانية سحب النافذة
-local dragging
-local dragInput
-local dragStart
-local startPos
+local dragging, dragInput, dragStart, startPos
 
 local function update(input)
     local delta = input.Position - dragStart
@@ -247,16 +254,14 @@ end)
 
 -- إعادة تطبيق الميزات عند إعادة توليد الشخصية
 player.CharacterAdded:Connect(function(newCharacter)
-    character = newCharacter
-    humanoid = newCharacter:WaitForChild("Humanoid")
-    
-    -- إعادة تطبيق إعدادات السرعة
-    humanoid.WalkSpeed = isSpeedBoostActive and boostedSpeed or normalSpeed
+    loadCharacter()
     
     -- إعادة تطبيق إعدادات القفز اللانهائي
     if isInfiniteJumpActive then
         UserInputService.JumpRequest:Connect(function()
-            humanoid:ChangeState(Enum.HumanoidStateType.Jumping)
+            if humanoid then
+                humanoid:ChangeState(Enum.HumanoidStateType.Jumping)
+            end
         end)
     end
 end)
