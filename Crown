@@ -10,7 +10,7 @@ local isSpeedBoostActive = false
 local isInfiniteJumpActive = false
 local isPlayerSizeBoostActive = false
 local normalSpeed = 16
-local boostedSpeed = normalSpeed * 6
+local boostedSpeed = normalSpeed * 8 -- تم التغيير من 6 إلى 8
 
 -- الحصول على شخصية اللاعب
 local player = Players.LocalPlayer
@@ -62,7 +62,7 @@ expandButton.Parent = frame
 local speedButton = Instance.new("TextButton")
 speedButton.Size = UDim2.new(0.8, 0, 0.15, 0)
 speedButton.Position = UDim2.new(0.1, 0, 0.4, 0)
-speedButton.Text = "Speed Boost (6x): OFF"
+speedButton.Text = "Speed Boost (8x): OFF" -- تم التغيير من 6x إلى 8x
 speedButton.TextSize = 18
 speedButton.TextColor3 = Color3.new(1, 1, 1)
 speedButton.BackgroundColor3 = Color3.new(0.2, 0.6, 0.8)
@@ -166,7 +166,7 @@ end
 -- دالة تبديل زيادة السرعة
 local function toggleSpeed()
     isSpeedBoostActive = not isSpeedBoostActive
-    speedButton.Text = isSpeedBoostActive and "Speed Boost (6x): ON" or "Speed Boost (6x): OFF"
+    speedButton.Text = isSpeedBoostActive and "Speed Boost (8x): ON" or "Speed Boost (8x): OFF" -- تم التغيير من 6x إلى 8x
     speedButton.BackgroundColor3 = isSpeedBoostActive and Color3.new(0.8, 0.2, 0.2) or Color3.new(0.2, 0.6, 0.8)
     humanoid.WalkSpeed = isSpeedBoostActive and boostedSpeed or normalSpeed
 end
