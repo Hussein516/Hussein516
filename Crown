@@ -10,7 +10,7 @@ local isSpeedBoostActive = false
 local isInfiniteJumpActive = false
 local isPlayerSizeBoostActive = false
 local normalSpeed = 16
-local boostedSpeed = normalSpeed * 11 -- تم التغيير إلى 11x
+local boostedSpeed = normalSpeed * 15 -- تم التغيير إلى 15x
 
 -- متغيرات اللاعب والشخصية
 local player = Players.LocalPlayer
@@ -73,7 +73,7 @@ expandButton.Parent = frame
 local speedButton = Instance.new("TextButton")
 speedButton.Size = UDim2.new(0.8, 0, 0.15, 0)
 speedButton.Position = UDim2.new(0.1, 0, 0.4, 0)
-speedButton.Text = "Speed Boost (11x): OFF" -- تم التغيير إلى 11x
+speedButton.Text = "Speed Boost (15x): OFF"
 speedButton.TextSize = 18
 speedButton.TextColor3 = Color3.new(1, 1, 1)
 speedButton.BackgroundColor3 = Color3.new(0.2, 0.6, 0.8)
@@ -173,7 +173,7 @@ end
 -- دالة تبديل زيادة السرعة
 local function toggleSpeed()
     isSpeedBoostActive = not isSpeedBoostActive
-    speedButton.Text = isSpeedBoostActive and "Speed Boost (11x): ON" or "Speed Boost (11x): OFF" -- تم التغيير إلى 11x
+    speedButton.Text = isSpeedBoostActive and "Speed Boost (15x): ON" or "Speed Boost (15x): OFF"
     speedButton.BackgroundColor3 = isSpeedBoostActive and Color3.new(0.8, 0.2, 0.2) or Color3.new(0.2, 0.6, 0.8)
     
     if humanoid then
@@ -244,7 +244,7 @@ frame.InputChanged:Connect(function(input)
     if input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch then
         dragInput = input
     end
-end)
+end
 
 UserInputService.InputChanged:Connect(function(input)
     if input == dragInput and dragging then
