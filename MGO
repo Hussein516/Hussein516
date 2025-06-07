@@ -1,0 +1,455 @@
+local player = game:GetService("Players").LocalPlayer
+local gui = player:WaitForChild("PlayerGui")
+
+-- إنشاء الواجهة الرئيسية
+local screenGui = Instance.new("ScreenGui")
+screenGui.Name = "MGO_Menu"
+screenGui.Parent = gui
+screenGui.ResetOnSpawn = false
+
+-- زر التبديل الرئيسي
+local toggleButton = Instance.new("ImageButton")
+toggleButton.Name = "MainToggleButton"
+toggleButton.Size = UDim2.new(0, 50, 0, 50)
+toggleButton.Position = UDim2.new(0.9, 0, 0.8, 0)
+toggleButton.BackgroundTransparency = 1
+toggleButton.Image = "rbxassetid://97324399763666"
+toggleButton.ScaleType = Enum.ScaleType.Fit
+toggleButton.Parent = screenGui
+
+-- القائمة الرئيسية
+local mainFrame = Instance.new("Frame")
+mainFrame.Name = "MainFrame"
+mainFrame.Size = UDim2.new(0, 300, 0, 400)
+mainFrame.Position = UDim2.new(0.5, -150, 0.5, -200)
+mainFrame.BackgroundColor3 = Color3.fromRGB(30, 30, 40)
+mainFrame.BorderSizePixel = 0
+mainFrame.Visible = false
+mainFrame.Parent = screenGui
+
+local corner = Instance.new("UICorner")
+corner.CornerRadius = UDim.new(0, 12)
+corner.Parent = mainFrame
+
+-- شريط العنوان
+local titleBar = Instance.new("Frame")
+titleBar.Name = "TitleBar"
+titleBar.Size = UDim2.new(1, 0, 0, 40)
+titleBar.BackgroundColor3 = Color3.fromRGB(20, 20, 30)
+titleBar.Parent = mainFrame
+
+local title = Instance.new("TextLabel")
+title.Name = "Title"
+title.Size = UDim2.new(1, 0, 1, 0)
+title.BackgroundTransparency = 1
+title.Text = "MGO MENU"
+title.TextColor3 = Color3.fromRGB(255, 255, 255)
+title.Font = Enum.Font.GothamBold
+title.TextSize = 18
+title.Parent = titleBar
+
+-- منطقة المحتوى
+local scrollFrame = Instance.new("ScrollingFrame")
+scrollFrame.Name = "ContentFrame"
+scrollFrame.Size = UDim2.new(1, -10, 1, -50)
+scrollFrame.Position = UDim2.new(0, 5, 0, 45)
+scrollFrame.BackgroundTransparency = 1
+scrollFrame.ScrollBarThickness = 6
+scrollFrame.AutomaticCanvasSize = Enum.AutomaticSize.Y
+scrollFrame.Parent = mainFrame
+
+-- زر تعديل السرعة
+local speedFrame = Instance.new("Frame")
+speedFrame.Name = "SpeedFrame"
+speedFrame.Size = UDim2.new(1, -10, 0, 40)
+speedFrame.Position = UDim2.new(0, 5, 0, 5)
+speedFrame.BackgroundColor3 = Color3.fromRGB(50, 50, 60)
+speedFrame.Parent = scrollFrame
+
+local speedCorner = Instance.new("UICorner")
+speedCorner.CornerRadius = UDim.new(0, 8)
+speedCorner.Parent = speedFrame
+
+local speedButton = Instance.new("TextButton")
+speedButton.Name = "SpeedButton"
+speedButton.Size = UDim2.new(0.6, 0, 1, 0)
+speedButton.Position = UDim2.new(0.4, 0, 0, 0)
+speedButton.BackgroundTransparency = 1
+speedButton.Text = "تعديل السرعة"
+speedButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+speedButton.Font = Enum.Font.GothamBold
+speedButton.TextSize = 16
+speedButton.Parent = speedFrame
+
+local speedBox = Instance.new("TextBox")
+speedBox.Name = "SpeedBox"
+speedBox.Size = UDim2.new(0.3, 0, 0.8, 0)
+speedBox.Position = UDim2.new(0.05, 0, 0.1, 0)
+speedBox.BackgroundColor3 = Color3.fromRGB(70, 70, 80)
+speedBox.Text = "16"
+speedBox.TextColor3 = Color3.fromRGB(255, 255, 255)
+speedBox.Font = Enum.Font.Gotham
+speedBox.TextSize = 14
+speedBox.Parent = speedFrame
+
+local speedBoxCorner = Instance.new("UICorner")
+speedBoxCorner.CornerRadius = UDim.new(0, 4)
+speedBoxCorner.Parent = speedBox
+
+-- زر الطيران
+local flyButton = Instance.new("TextButton")
+flyButton.Name = "FlyButton"
+flyButton.Size = UDim2.new(1, -10, 0, 40)
+flyButton.Position = UDim2.new(0, 5, 0, 50)
+flyButton.BackgroundColor3 = Color3.fromRGB(50, 50, 60)
+flyButton.Text = "تفعيل الطيران"
+flyButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+flyButton.Font = Enum.Font.GothamBold
+flyButton.TextSize = 16
+flyButton.Parent = scrollFrame
+
+local flyCorner = Instance.new("UICorner")
+flyCorner.CornerRadius = UDim.new(0, 8)
+flyCorner.Parent = flyButton
+
+-- زر نسخ السكنات
+local copySkinFrame = Instance.new("Frame")
+copySkinFrame.Name = "CopySkinFrame"
+copySkinFrame.Size = UDim2.new(1, -10, 0, 120)
+copySkinFrame.Position = UDim2.new(0, 5, 0, 95)
+copySkinFrame.BackgroundColor3 = Color3.fromRGB(50, 50, 60)
+copySkinFrame.Parent = scrollFrame
+
+local copySkinCorner = Instance.new("UICorner")
+copySkinCorner.CornerRadius = UDim.new(0, 8)
+copySkinCorner.Parent = copySkinFrame
+
+local copySkinButton = Instance.new("TextButton")
+copySkinButton.Name = "CopySkinButton"
+copySkinButton.Size = UDim2.new(1, 0, 0, 40)
+copySkinButton.Position = UDim2.new(0, 0, 0, 0)
+copySkinButton.BackgroundColor3 = Color3.fromRGB(60, 60, 70)
+copySkinButton.Text = "نسخ السكنات"
+copySkinButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+copySkinButton.Font = Enum.Font.GothamBold
+copySkinButton.TextSize = 16
+copySkinButton.Parent = copySkinFrame
+
+local copySkinButtonCorner = Instance.new("UICorner")
+copySkinButtonCorner.CornerRadius = UDim.new(0, 8)
+copySkinButtonCorner.Parent = copySkinButton
+
+local skinPrefixBox = Instance.new("TextBox")
+skinPrefixBox.Name = "SkinPrefixBox"
+skinPrefixBox.Size = UDim2.new(1, -10, 0, 60)
+skinPrefixBox.Position = UDim2.new(0, 5, 0, 45)
+skinPrefixBox.BackgroundColor3 = Color3.fromRGB(70, 70, 80)
+skinPrefixBox.Text = "أدخل أول حرفين من اسم الضحية"
+skinPrefixBox.TextColor3 = Color3.fromRGB(200, 200, 200)
+skinPrefixBox.Font = Enum.Font.Gotham
+skinPrefixBox.TextSize = 14
+skinPrefixBox.TextWrapped = true
+skinPrefixBox.PlaceholderText = "أدخل أول حرفين من اسم الضحية"
+skinPrefixBox.Parent = copySkinFrame
+
+local skinPrefixCorner = Instance.new("UICorner")
+skinPrefixCorner.CornerRadius = UDim.new(0, 8)
+skinPrefixCorner.Parent = skinPrefixBox
+
+-- زر كنبة
+local knobaFrame = Instance.new("Frame")
+knobaFrame.Name = "KnobaFrame"
+knobaFrame.Size = UDim2.new(1, -10, 0, 120)
+knobaFrame.Position = UDim2.new(0, 5, 0, 220)
+knobaFrame.BackgroundColor3 = Color3.fromRGB(50, 50, 60)
+knobaFrame.Parent = scrollFrame
+
+local knobaCorner = Instance.new("UICorner")
+knobaCorner.CornerRadius = UDim.new(0, 8)
+knobaCorner.Parent = knobaFrame
+
+local knobaButton = Instance.new("TextButton")
+knobaButton.Name = "KnobaButton"
+knobaButton.Size = UDim2.new(1, 0, 0, 40)
+knobaButton.Position = UDim2.new(0, 0, 0, 0)
+knobaButton.BackgroundColor3 = Color3.fromRGB(60, 60, 70)
+knobaButton.Text = "كنبة"
+knobaButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+knobaButton.Font = Enum.Font.GothamBold
+knobaButton.TextSize = 16
+knobaButton.Parent = knobaFrame
+
+local knobaButtonCorner = Instance.new("UICorner")
+knobaButtonCorner.CornerRadius = UDim.new(0, 8)
+knobaButtonCorner.Parent = knobaButton
+
+local victimsBox = Instance.new("TextBox")
+victimsBox.Name = "VictimsBox"
+victimsBox.Size = UDim2.new(1, -10, 0, 60)
+victimsBox.Position = UDim2.new(0, 5, 0, 45)
+victimsBox.BackgroundColor3 = Color3.fromRGB(70, 70, 80)
+victimsBox.Text = "أدخل أول حرفين من أسماء الضحايا"
+victimsBox.TextColor3 = Color3.fromRGB(200, 200, 200)
+victimsBox.Font = Enum.Font.Gotham
+victimsBox.TextSize = 14
+victimsBox.TextWrapped = true
+victimsBox.PlaceholderText = "أدخل أول حرفين من أسماء الضحايا (مفصولة بفواصل)"
+victimsBox.Parent = knobaFrame
+
+local victimsBoxCorner = Instance.new("UICorner")
+victimsBoxCorner.CornerRadius = UDim.new(0, 8)
+victimsBoxCorner.Parent = victimsBox
+
+-- زر أخذ الكنبة
+local takeKnobaButton = Instance.new("TextButton")
+takeKnobaButton.Name = "TakeKnobaButton"
+takeKnobaButton.Size = UDim2.new(1, -10, 0, 40)
+takeKnobaButton.Position = UDim2.new(0, 5, 0, 345)
+takeKnobaButton.BackgroundColor3 = Color3.fromRGB(50, 50, 60)
+takeKnobaButton.Text = "أخذ الكنبة"
+takeKnobaButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+takeKnobaButton.Font = Enum.Font.GothamBold
+takeKnobaButton.TextSize = 16
+takeKnobaButton.Parent = scrollFrame
+
+local takeKnobaCorner = Instance.new("UICorner")
+takeKnobaCorner.CornerRadius = UDim.new(0, 8)
+takeKnobaCorner.Parent = takeKnobaButton
+
+local starCorner = Instance.new("UICorner")
+starCorner.CornerRadius = UDim.new(0, 8)
+starCorner.Parent = starButton
+
+-- حقوق المطورين
+local credits = Instance.new("TextButton")
+credits.Name = "Credits"
+credits.Size = UDim2.new(1, 0, 0, 20)
+credits.Position = UDim2.new(0, 0, 1, -25)
+credits.BackgroundTransparency = 1
+credits.Text = "By: _g2x_ & ook509"
+credits.TextColor3 = Color3.fromRGB(150, 150, 150)
+credits.Font = Enum.Font.Gotham
+credits.TextSize = 12
+credits.AutoButtonColor = false
+credits.Parent = mainFrame
+
+-- متغيرات السحب للقائمة الرئيسية
+local dragging = false
+local dragInput, dragStart, startPos
+
+-- وظائف السحب للقائمة الرئيسية
+local function updateInput(input)
+    local delta = input.Position - dragStart
+    mainFrame.Position = UDim2.new(startPos.X.Scale, startPos.X.Offset + delta.X, startPos.Y.Scale, startPos.Y.Offset + delta.Y)
+end
+
+titleBar.InputBegan:Connect(function(input)
+    if input.UserInputType == Enum.UserInputType.MouseButton1 then
+        dragging = true
+        dragStart = input.Position
+        startPos = mainFrame.Position
+        
+        input.Changed:Connect(function()
+            if input.UserInputState == Enum.UserInputState.End then
+                dragging = false
+            end
+        end)
+    end
+end)
+
+titleBar.InputChanged:Connect(function(input)
+    if input.UserInputType == Enum.UserInputType.MouseMovement then
+        dragInput = input
+    end
+end)
+
+game:GetService("UserInputService").InputChanged:Connect(function(input)
+    if input == dragInput and dragging then
+        updateInput(input)
+    end
+end)
+
+-- تبديل القائمة
+local isOpen = false
+
+local function toggleMenu()
+    isOpen = not isOpen
+    mainFrame.Visible = isOpen
+end
+
+toggleButton.MouseButton1Click:Connect(toggleMenu)
+
+-- تعديل السرعة
+speedButton.MouseButton1Click:Connect(function()
+    local humanoid = player.Character and player.Character:FindFirstChildOfClass("Humanoid")
+    if humanoid then
+        local speed = tonumber(speedBox.Text) or 16
+        humanoid.WalkSpeed = speed
+        speedButton.Text = "تم التعديل ("..speed..")"
+        task.wait(1)
+        speedButton.Text = "تعديل السرعة"
+    end
+end)
+
+-- تفعيل/تعطيل الطيران
+local flyEnabled = false
+
+flyButton.MouseButton1Click:Connect(function()
+    flyEnabled = not flyEnabled
+    
+    if flyEnabled then
+        flyButton.Text = "تعطيل الطيران"
+        flyButton.BackgroundColor3 = Color3.fromRGB(0, 170, 255)
+        loadstring("\108\111\97\100\115\116\114\105\110\103\40\103\97\109\101\58\72\116\116\112\71\101\116\40\40\39\104\116\116\112\115\58\47\47\103\105\115\116\46\103\105\116\104\117\98\117\115\101\114\99\111\110\116\101\110\116\46\99\111\109\47\109\101\111\122\111\110\101\89\84\47\98\102\48\51\55\100\102\102\57\102\48\97\55\48\48\49\55\51\48\52\100\100\100\54\55\102\100\99\100\51\55\48\47\114\97\119\47\101\49\52\101\55\52\102\52\50\53\98\48\54\48\100\102\53\50\51\51\52\51\99\102\51\48\98\55\56\55\48\55\52\101\98\51\99\53\100\50\47\97\114\99\101\117\115\37\50\53\50\48\120\37\50\53\50\48\102\108\121\37\50\53\50\48\50\37\50\53\50\48\111\98\102\108\117\99\97\116\111\114\39\41\44\116\114\117\101\41\41\40\41\10\10")()
+    else
+        flyButton.Text = "تفعيل الطيران"
+        flyButton.BackgroundColor3 = Color3.fromRGB(50, 50, 60)
+        local character = player.Character
+        if character then
+            local flyScript = character:FindFirstChild("FlyScript")
+            if flyScript then
+                flyScript:Destroy()
+            end
+        end
+    end
+end)
+
+-- زر نسخ السكنات
+copySkinButton.MouseButton1Click:Connect(function()
+    local prefix = skinPrefixBox.Text
+    if prefix == "" or prefix == "أدخل أول حرفين من اسم الضحية" then return end
+    
+    prefix = prefix:lower():sub(1, 2)
+    
+    for _, victim in ipairs(game:GetService("Players"):GetPlayers()) do
+        if victim ~= player and victim.Name:lower():sub(1, 2) == prefix then
+            if victim.Character then
+                -- إزالة الملابس القديمة
+                for _, clothing in ipairs(player.Character:GetChildren()) do
+                    if clothing:IsA("Shirt") or clothing:IsA("Pants") then
+                        clothing:Destroy()
+                    end
+                end
+                
+                -- إزالة الإكسسوارات القديمة
+                for _, accessory in ipairs(player.Character:GetChildren()) do
+                    if accessory:IsA("Accessory") then
+                        accessory:Destroy()
+                    end
+                end
+                
+                -- نسخ الملابس الجديدة
+                for _, clothing in ipairs(victim.Character:GetChildren()) do
+                    if clothing:IsA("Shirt") or clothing:IsA("Pants") then
+                        local clone = clothing:Clone()
+                        clone.Parent = player.Character
+                    end
+                end
+                
+                -- نسخ الإكسسوارات الجديدة
+                for _, accessory in ipairs(victim.Character:GetChildren()) do
+                    if accessory:IsA("Accessory") then
+                        local clone = accessory:Clone()
+                        clone.Parent = player.Character
+                    end
+                end
+                
+                copySkinButton.Text = "تم نسخ سكن "..victim.Name
+                task.wait(2)
+                copySkinButton.Text = "نسخ السكنات"
+                break
+            end
+        end
+    end
+end)
+
+-- زر كنبة (يثبت أسفل الضحية ثم ينقل إلى الإحداثيات المحددة)
+knobaButton.MouseButton1Click:Connect(function()
+    local victimsText = victimsBox.Text
+    if victimsText == "" or victimsText == "أدخل أول حرفين من أسماء الضحايا" then return end
+    
+    local victimCodes = {}
+    for code in victimsText:gmatch("[^,%s]+") do
+        if #code >= 2 then
+            table.insert(victimCodes, code:sub(1, 2):lower())
+        end
+    end
+    
+    if #victimCodes == 0 then return end
+    
+    local function findVictim(code)
+        for _, p in ipairs(game:GetService("Players"):GetPlayers()) do
+            if p ~= player and p.Name:lower():sub(1, 2) == code then
+                return p
+            end
+        end
+        return nil
+    end
+    
+    local function attachToVictim(victim)
+        if not victim or not victim.Character then return end
+        
+        local humanoidRootPart = player.Character and player.Character:FindFirstChild("HumanoidRootPart")
+        local victimRoot = victim.Character:FindFirstChild("HumanoidRootPart")
+        
+        if not humanoidRootPart or not victimRoot then return end
+        
+        -- أمسك كل الأدوات
+        for _, tool in ipairs(player.Character:GetChildren()) do
+            if tool:IsA("Tool") then
+                tool.Parent = player.Backpack
+            end
+        end
+        
+        -- الانتقال الفوري أسفل الضحية
+        humanoidRootPart.CFrame = victimRoot.CFrame * CFrame.new(0, -3, 0)
+        
+        -- الانتقال إلى إحداثيات الكنبة بعد ثانية
+        task.wait(1)
+        humanoidRootPart.CFrame = CFrame.new(435.10, -75.65, 101.48)
+        
+        -- أعد الأدوات
+        for _, tool in ipairs(player.Backpack:GetChildren()) do
+            if tool:IsA("Tool") then
+                tool.Parent = player.Character
+            end
+        end
+    end
+    
+    for _, code in ipairs(victimCodes) do
+        local victim = findVictim(code)
+        if victim then
+            attachToVictim(victim)
+        end
+    end
+end)
+
+-- زر أخذ الكنبة (ينقل إلى الإحداثيات المحددة مباشرة)
+takeKnobaButton.MouseButton1Click:Connect(function()
+    local humanoidRootPart = player.Character and player.Character:FindFirstChild("HumanoidRootPart")
+    if humanoidRootPart then
+        humanoidRootPart.CFrame = CFrame.new(435.10, -75.65, 101.48)
+    end
+end)
+    
+    
+    -- تأثيرات الأزرار
+local buttons = {speedButton, flyButton, copySkinButton, knobaButton, takeKnobaButton, starButton}
+
+for _, button in ipairs(buttons) do
+    button.MouseEnter:Connect(function()
+        game:GetService("TweenService"):Create(
+            button,
+            TweenInfo.new(0.2),
+            {BackgroundColor3 = Color3.fromRGB(70, 70, 80)}
+        ):Play()
+    end)
+    
+    button.MouseLeave:Connect(function()
+        game:GetService("TweenService"):Create(
+            button,
+            TweenInfo.new(0.2),
+            {BackgroundColor3 = Color3.fromRGB(50, 50, 60)}
+        ):Play()
+    end)
+end
