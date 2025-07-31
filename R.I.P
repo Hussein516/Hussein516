@@ -1,0 +1,74 @@
+local targetPosition = Vector3.new(-41.19, 364.30, 876.83)
+local rotationSpeed = 500 
+
+local Players = game:GetService("Players")
+local RunService = game:GetService("RunService")
+
+local player = Players.LocalPlayer
+local character
+local humanoid
+local humanoidRootPart
+local spinConnection
+
+local function loadCharacter()
+    character = player.Character or player.CharacterAdded:Wait()
+    humanoid = character:WaitForChild("Humanoid")
+    humanoidRootPart = character:WaitForChild("HumanoidRootPart")
+end
+
+local function teleportToPosition()
+    if not character or not humanoidRootPart then return end
+    
+    
+    humanoidRootPart.CFrame = CFrame.new(targetPosition) * CFrame.Angles(0, math.rad(90), 0)
+    print("R.I.P")
+end
+
+local function startUltraSpin()
+    
+    if spinConnection then
+        spinConnection:Disconnect()
+    end
+    
+    
+    local bodyGyro = Instance.new("BodyGyro")
+    bodyGyro.Name = "UltraSpinGyro"
+    bodyGyro.P = 20000 
+    bodyGyro.MaxTorque = Vector3.new(0, math.huge, 0)
+    bodyGyro.D = 1000
+    bodyGyro.CFrame = humanoidRootPart.CFrame
+    bodyGyro.Parent = humanoidRootPart
+    
+    
+    local currentAngle = 0
+    
+    
+    spinConnection = RunService.Heartbeat:Connect(function(deltaTime)
+        if not humanoidRootPart or not bodyGyro or bodyGyro.Parent ~= humanoidRootPart then
+            return
+        end
+        
+        
+        currentAngle = currentAngle + math.rad(rotationSpeed) * deltaTime
+        
+        
+        bodyGyro.CFrame = CFrame.new(humanoidRootPart.Position) * 
+                         CFrame.Angles(0, currentAngle, 0)
+    end)
+end
+
+player.CharacterAdded:Connect(function(newCharacter)
+    character = newCharacter
+    repeat wait() until character:FindFirstChild("HumanoidRootPart")
+    humanoid = character:WaitForChild("Humanoid")
+    humanoidRootPart = character:WaitForChild("HumanoidRootPart")
+    
+    wait(0.3) 
+    
+    teleportToPosition()
+    startUltraSpin()
+end)
+
+loadCharacter()
+teleportToPosition()
+startUltraSpin()
