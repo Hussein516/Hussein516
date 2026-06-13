@@ -8,86 +8,87 @@ local PlayerGui = LocalPlayer:WaitForChild("PlayerGui")
 -- تدمير النسخة القديمة لمنع التداخل
 if PlayerGui:FindFirstChild("TargetSystemGui") then PlayerGui.TargetSystemGui:Destroy() end
 
--- [ إنشاء الواجهة الاحترافية الجديدة ]
+-- [ إنشاء الواجهة الاحترافية المصغرة والأنيقة ]
 local ScreenGui = Instance.new("ScreenGui", PlayerGui)
 ScreenGui.Name = "TargetSystemGui"
 ScreenGui.ResetOnSpawn = false
 
--- زر فتح وإغلاق الواجهة (أنيق وصغير في الشاشة)
+-- زر فتح وإغلاق الواجهة (تم نقله إلى أقصى اليمين المعاكس)
 local ToggleBtn = Instance.new("TextButton", ScreenGui)
-ToggleBtn.Size = UDim2.new(0, 110, 0, 30)
-ToggleBtn.Position = UDim2.new(0.02, 0, 0.1, 0)
+ToggleBtn.Size = UDim2.new(0, 100, 0, 28)
+ToggleBtn.Position = UDim2.new(0.9, -10, 0.05, 0) -- جهة اليمين في الأعلى
 ToggleBtn.BackgroundColor3 = Color3.fromRGB(15, 15, 20)
-ToggleBtn.Text = "⚡ [ MENU ]"
-ToggleBtn.TextColor3 = Color3.fromRGB(0, 255, 200)
+ToggleBtn.Text = "⚡ [ CLOSE ]"
+ToggleBtn.TextColor3 = Color3.fromRGB(255, 50, 50)
 ToggleBtn.Font = Enum.Font.GothamBold
-ToggleBtn.TextSize = 12
+ToggleBtn.TextSize = 11
 local ToggleCorner = Instance.new("UICorner", ToggleBtn)
-ToggleCorner.CornerRadius = UDim.new(0, 8)
+ToggleCorner.CornerRadius = UDim.new(0, 6)
 local ToggleStroke = Instance.new("UIStroke", ToggleBtn)
-ToggleStroke.Color = Color3.fromRGB(0, 255, 200)
+ToggleStroke.Color = Color3.fromRGB(255, 50, 50)
 ToggleStroke.Thickness = 1.2
 
--- الفريم الأساسي للواجهة
+-- الفريم الأساسي للواجهة (تم تصغير الحجم ليكون ملموم وأنيق)
 local MainFrame = Instance.new("Frame", ScreenGui)
-MainFrame.Size = UDim2.new(0, 280, 0, 310) -- تم تكبير الحجم ليناسب الخيارات الجديدة
-MainFrame.Position = UDim2.new(0.5, -140, 0.4, -155)
+MainFrame.Size = UDim2.new(0, 240, 0, 280) 
+MainFrame.Position = UDim2.new(0.5, -120, 0.4, -140)
 MainFrame.BackgroundColor3 = Color3.fromRGB(15, 15, 22)
 MainFrame.BorderSizePixel = 0
 MainFrame.Active = true
 MainFrame.Draggable = true
 
 local Corner = Instance.new("UICorner", MainFrame)
-Corner.CornerRadius = UDim.new(0, 14)
+Corner.CornerRadius = UDim.new(0, 10)
 local UIStroke = Instance.new("UIStroke", MainFrame)
 UIStroke.Color = Color3.fromRGB(0, 170, 255)
-UIStroke.Thickness = 2
+UIStroke.Thickness = 1.5
 
 -- عنوان الواجهة النيون
 local Title = Instance.new("TextLabel", MainFrame)
-Title.Size = UDim2.new(1, 0, 0, 40)
+Title.Size = UDim2.new(1, 0, 0, 35)
 Title.Text = "CYBER TARGET SYSTEM"
 Title.TextColor3 = Color3.fromRGB(0, 170, 255)
-Title.TextSize = 14
+Title.TextSize = 12
 Title.Font = Enum.Font.GothamBold
 Title.BackgroundTransparency = 1
 
 -- حقل إدخال الاسم
 local NameInput = Instance.new("TextBox", MainFrame)
-NameInput.Size = UDim2.new(0, 240, 0, 35); NameInput.Position = UDim2.new(0, 20, 0, 50)
-NameInput.PlaceholderText = "🔍 اكتب اسم الهدف..."
+NameInput.Size = UDim2.new(0, 200, 0, 32); NameInput.Position = UDim2.new(0, 20, 0, 45)
+NameInput.PlaceholderText = "🔍 اسم الهدف هنا..."
 NameInput.Text = ""
 NameInput.BackgroundColor3 = Color3.fromRGB(25, 25, 30); NameInput.TextColor3 = Color3.new(1,1,1)
 NameInput.Font = Enum.Font.Gotham
-NameInput.TextSize = 13
+NameInput.TextSize = 12
 local Corner2 = Instance.new("UICorner", NameInput)
 local InputStroke = Instance.new("UIStroke", NameInput)
 InputStroke.Color = Color3.fromRGB(45, 45, 50)
 
 -- الأزرار
 local BtnBehind = Instance.new("TextButton", MainFrame)
-BtnBehind.Size = UDim2.new(0, 240, 0, 35); BtnBehind.Position = UDim2.new(0, 20, 0, 100)
+BtnBehind.Size = UDim2.new(0, 200, 0, 32); BtnBehind.Position = UDim2.new(0, 20, 0, 90)
 BtnBehind.Text = "🔒 تثبيت عادي: مطفأ"; BtnBehind.BackgroundColor3 = Color3.fromRGB(30, 30, 35); BtnBehind.TextColor3 = Color3.new(1,1,1)
-BtnBehind.Font = Enum.Font.GothamBold; BtnBehind.TextSize = 12
+BtnBehind.Font = Enum.Font.GothamBold; BtnBehind.TextSize = 11
 local Corner3 = Instance.new("UICorner", BtnBehind)
 
 local BtnWave = Instance.new("TextButton", MainFrame) 
-BtnWave.Size = UDim2.new(0, 240, 0, 35); BtnWave.Position = UDim2.new(0, 20, 0, 145)
+BtnWave.Size = UDim2.new(0, 200, 0, 32); BtnWave.Position = UDim2.new(0, 20, 0, 130)
 BtnWave.Text = "🌊 تثبيت تدريجي: مطفأ"; BtnWave.BackgroundColor3 = Color3.fromRGB(30, 30, 35); BtnWave.TextColor3 = Color3.new(1,1,1)
-BtnWave.Font = Enum.Font.GothamBold; BtnWave.TextSize = 12
+BtnWave.Font = Enum.Font.GothamBold; BtnWave.TextSize = 11
 local Corner4 = Instance.new("UICorner", BtnWave)
 
--- زر الفريمات الخارقة الجديد
+-- زر الفريمات الخارقة
 local BtnFPS = Instance.new("TextButton", MainFrame) 
-BtnFPS.Size = UDim2.new(0, 240, 0, 35); BtnFPS.Position = UDim2.new(0, 20, 0, 190)
-BtnFPS.Text = "🚀 فريمات خارقة (9999+): مطفأ"; BtnFPS.BackgroundColor3 = Color3.fromRGB(30, 30, 35); BtnFPS.TextColor3 = Color3.new(1,1,1)
-BtnFPS.Font = Enum.Font.GothamBold; BtnFPS.TextSize = 12
+BtnFPS.Size = UDim2.new(0, 200, 0, 32); BtnFPS.Position = UDim2.new(0, 20, 0, 170)
+BtnFPS.Text = "🚀 فريمات خارقة: مطفأ"; BtnFPS.BackgroundColor3 = Color3.fromRGB(30, 30, 35); BtnFPS.TextColor3 = Color3.new(1,1,1)
+BtnFPS.Font = Enum.Font.GothamBold; BtnFPS.TextSize = 11
 local CornerFPS = Instance.new("UICorner", BtnFPS)
 
+-- الزر الثالث (فخ الفويد الساحق مع ميزة الـ Anti-Lag الإضافية)
 local BtnVoidTrap = Instance.new("TextButton", MainFrame) 
-BtnVoidTrap.Size = UDim2.new(0, 240, 0, 40); BtnVoidTrap.Position = UDim2.new(0, 20, 0, 245)
-BtnVoidTrap.Text = "💀 فخ الفويد الساحق"; BtnVoidTrap.BackgroundColor3 = Color3.fromRGB(180, 20, 50); BtnVoidTrap.TextColor3 = Color3.new(1,1,1)
-BtnVoidTrap.Font = Enum.Font.GothamBold; BtnVoidTrap.TextSize = 13
+BtnVoidTrap.Size = UDim2.new(0, 200, 0, 38); BtnVoidTrap.Position = UDim2.new(0, 20, 0, 220)
+BtnVoidTrap.Text = "💀 فخ الفويد + ANTI LAG"; BtnVoidTrap.BackgroundColor3 = Color3.fromRGB(180, 20, 50); BtnVoidTrap.TextColor3 = Color3.new(1,1,1)
+BtnVoidTrap.Font = Enum.Font.GothamBold; BtnVoidTrap.TextSize = 11
 local Corner5 = Instance.new("UICorner", BtnVoidTrap)
 
 -- [ المتغيرات الأساسية ]
@@ -110,7 +111,7 @@ local lastTargetCFrame = CFrame.new()
 local cameraX, cameraY, cameraZoom = 0, 0, 12
 local loopTime = 0 
 
--- برمجة زر فتح وإغلاق القائمة
+-- برمجة زر فتح وإغلاق القائمة المعاكس
 ToggleBtn.MouseButton1Click:Connect(function()
     MainFrame.Visible = not MainFrame.Visible
     if MainFrame.Visible then
@@ -118,7 +119,7 @@ ToggleBtn.MouseButton1Click:Connect(function()
         ToggleBtn.TextColor3 = Color3.fromRGB(255, 50, 50)
         ToggleBtn.UIStroke.Color = Color3.fromRGB(255, 50, 50)
     else
-        ToggleBtn.Text = "⚡ [ MENU ]"
+        ToggleBtn.Text = "⚡ [ OPEN ]"
         ToggleBtn.TextColor3 = Color3.fromRGB(0, 255, 200)
         ToggleBtn.UIStroke.Color = Color3.fromRGB(0, 255, 200)
     end
@@ -182,7 +183,7 @@ local function resetStatesExcept(activeState)
     
     if activeState ~= "VoidTrap" then
         stateVoidTrap = false
-        BtnVoidTrap.Text = "💀 فخ الفويد الساحق"
+        BtnVoidTrap.Text = "💀 فخ الفويد + ANTI LAG"
         BtnVoidTrap.BackgroundColor3 = Color3.fromRGB(180, 20, 50)
     end
 
@@ -223,22 +224,31 @@ BtnWave.MouseButton1Click:Connect(function()
     end
 end)
 
--- تفعيل خيار الفريمات المفتوحة
 BtnFPS.MouseButton1Click:Connect(function()
     stateFPS = not stateFPS
     if stateFPS then
         BtnFPS.Text = "🚀 فريمات خارقة: مفعل"
         BtnFPS.BackgroundColor3 = Color3.fromRGB(0, 200, 100)
-        -- برمجياً نقوم بإخبار محرك اللعبة بإلغاء سقف الفريمات (FPS Cap) لأعلى رقم مدعوم
-        if setfpscap then
-            setfpscap(9999999)
-        end
+        if setfpscap then setfpscap(9999999) end
     else
-        BtnFPS.Text = "🚀 فريمات خارقة (9999+): مطفأ"
+        BtnFPS.Text = "🚀 فريمات خارقة: مطفأ"
         BtnFPS.BackgroundColor3 = Color3.fromRGB(30, 30, 35)
-        if setfpscap then
-            setfpscap(60) -- إعادتها للوضع الافتراضي عند الإطفاء
-        end
+        if setfpscap then setfpscap(60) end
+    end
+end)
+
+-- [ برمجة الـ Anti-Lag الإضافية على Thrown المربوطة بالزر الثالث ]
+local thrownFolder = workspace:FindFirstChild("Thrown")
+if not thrownFolder then
+    thrownFolder = Instance.new("Folder", workspace)
+    thrownFolder.Name = "Thrown"
+end
+
+thrownFolder.ChildAdded:Connect(function(child)
+    if stateVoidTrap then
+        -- إذا تم رمي أي مقذوف أثناء عمل الفخ، يُمسح فوراً لإنهاء اللاغ تماماً وبدون أي انتظار
+        task.wait() 
+        child:Destroy()
     end
 end)
 
@@ -252,7 +262,7 @@ BtnVoidTrap.MouseButton1Click:Connect(function()
     
     savedPosition = myHRP.CFrame
     trapStartTime = os.clock()
-    BtnVoidTrap.Text = "⚡ جاري السحق الإعصاري..."
+    BtnVoidTrap.Text = "⚡ سحق + ANTI LAG..."
     BtnVoidTrap.BackgroundColor3 = Color3.fromRGB(80, 80, 90)
 end)
 
@@ -279,14 +289,12 @@ RunService.RenderStepped:Connect(function(deltaTime)
     local myHumanoid = myCharacter:FindFirstChildOfClass("Humanoid")
     if not myHRP or not myHumanoid then return end
 
-    -- [ أمان دائم مضاد للفويد ]
     if myHumanoid.RequiresNeck then myHumanoid.RequiresNeck = false end 
     if myHRP.Position.Y < (workspace.FallenPartsDestroyHeight + 2) then
         myHRP.Velocity = Vector3.new(0, 0, 0)
         myHRP.CFrame = CFrame.new(myHRP.Position.X, workspace.FallenPartsDestroyHeight + 5, myHRP.Position.Z)
     end
 
-    -- [ فخ الفويد الإعصاري وضبط الفريمات المفتوحة داخل اللوب كدعم ]
     if stateFPS and setfpscap then setfpscap(9999999) end
 
     if stateVoidTrap then
@@ -307,7 +315,7 @@ RunService.RenderStepped:Connect(function(deltaTime)
                 myHRP.Velocity = Vector3.new(0, 0, 0)
             end
             setSmartFreeze(false)
-            BtnVoidTrap.Text = "💀 فخ الفويد الساحق"
+            BtnVoidTrap.Text = "💀 فخ الفويد + ANTI LAG"
             BtnVoidTrap.BackgroundColor3 = Color3.fromRGB(180, 20, 50)
         end
         return 
@@ -327,7 +335,6 @@ RunService.RenderStepped:Connect(function(deltaTime)
         if targetAcceleration.Magnitude > 150 then targetAcceleration = targetAcceleration.Unit * 150 end
         local predictedVector = velocity * PREDICTION_TIME + 0.5 * targetAcceleration * (PREDICTION_TIME ^ 2)
         
-        -- [ كاشف اللف السريع للخصم (Anti-Spin) ]
         local currentTargetLook = targetHRP.CFrame.LookVector
         local lastTargetLook = lastTargetCFrame.LookVector
         local angularVelocity = math.acos(math.clamp(currentTargetLook:Dot(lastTargetLook), -1, 1)) / 0.016
