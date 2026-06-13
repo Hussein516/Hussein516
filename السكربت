@@ -28,10 +28,10 @@ local ToggleStroke = Instance.new("UIStroke", ToggleBtn)
 ToggleStroke.Color = Color3.fromRGB(255, 50, 50)
 ToggleStroke.Thickness = 1.2
 
--- الفريم الأساسي للواجهة (حجم مصغر وملموم)
+-- الفريم الأساسي للواجهة
 local MainFrame = Instance.new("Frame", ScreenGui)
-MainFrame.Size = UDim2.new(0, 240, 0, 280) 
-MainFrame.Position = UDim2.new(0.5, -120, 0.4, -140)
+MainFrame.Size = UDim2.new(0, 240, 0, 320) 
+MainFrame.Position = UDim2.new(0.5, -120, 0.4, -160)
 MainFrame.BackgroundColor3 = Color3.fromRGB(15, 15, 22)
 MainFrame.BorderSizePixel = 0
 MainFrame.Active = true
@@ -43,7 +43,7 @@ local UIStroke = Instance.new("UIStroke", MainFrame)
 UIStroke.Color = Color3.fromRGB(0, 170, 255)
 UIStroke.Thickness = 1.5
 
--- عنوان الواجهة النيون
+-- عنوان الواجهة
 local Title = Instance.new("TextLabel", MainFrame)
 Title.Size = UDim2.new(1, 0, 0, 35)
 Title.Text = "CYBER TARGET SYSTEM"
@@ -62,7 +62,7 @@ NameInput.Font = Enum.Font.Gotham
 NameInput.TextSize = 12
 local Corner2 = Instance.new("UICorner", NameInput)
 
--- الأزرار
+-- [ الأزرار ]
 local BtnBehind = Instance.new("TextButton", MainFrame)
 BtnBehind.Size = UDim2.new(0, 200, 0, 32); BtnBehind.Position = UDim2.new(0, 20, 0, 90)
 BtnBehind.Text = "🔒 تثبيت عادي: مطفأ"; BtnBehind.BackgroundColor3 = Color3.fromRGB(30, 30, 35); BtnBehind.TextColor3 = Color3.new(1,1,1)
@@ -75,16 +75,21 @@ BtnWave.Text = "🌊 تثبيت تدريجي: مطفأ"; BtnWave.BackgroundColor
 BtnWave.Font = Enum.Font.GothamBold; BtnWave.TextSize = 11
 local Corner4 = Instance.new("UICorner", BtnWave)
 
--- [ الزر الثالث: فريمات خارقة + ANTI LAG ]
+-- [ زر التثبيت الأرضي المطور ]
+local BtnUnder = Instance.new("TextButton", MainFrame) 
+BtnUnder.Size = UDim2.new(0, 200, 0, 32); BtnUnder.Position = UDim2.new(0, 20, 0, 170)
+BtnUnder.Text = "👇 تثبيت أرضي (3.5S + توجيه): مطفأ"; BtnUnder.BackgroundColor3 = Color3.fromRGB(30, 30, 35); BtnUnder.TextColor3 = Color3.fromRGB(255, 200, 0)
+BtnUnder.Font = Enum.Font.GothamBold; BtnUnder.TextSize = 11
+local CornerUnder = Instance.new("UICorner", BtnUnder)
+
 local BtnFPS = Instance.new("TextButton", MainFrame) 
-BtnFPS.Size = UDim2.new(0, 200, 0, 32); BtnFPS.Position = UDim2.new(0, 20, 0, 170)
+BtnFPS.Size = UDim2.new(0, 200, 0, 32); BtnFPS.Position = UDim2.new(0, 20, 0, 210)
 BtnFPS.Text = "🚀 فريمات + ANTI LAG: مطفأ"; BtnFPS.BackgroundColor3 = Color3.fromRGB(30, 30, 35); BtnFPS.TextColor3 = Color3.new(1,1,1)
 BtnFPS.Font = Enum.Font.GothamBold; BtnFPS.TextSize = 11
 local CornerFPS = Instance.new("UICorner", BtnFPS)
 
--- [ الزر الرابع: فخ الفويد الساحق ]
 local BtnVoidTrap = Instance.new("TextButton", MainFrame) 
-BtnVoidTrap.Size = UDim2.new(0, 200, 0, 38); BtnVoidTrap.Position = UDim2.new(0, 20, 0, 215)
+BtnVoidTrap.Size = UDim2.new(0, 200, 0, 38); BtnVoidTrap.Position = UDim2.new(0, 20, 0, 255)
 BtnVoidTrap.Text = "💀 فخ الفويد الساحق"; BtnVoidTrap.BackgroundColor3 = Color3.fromRGB(180, 20, 50); BtnVoidTrap.TextColor3 = Color3.new(1,1,1)
 BtnVoidTrap.Font = Enum.Font.GothamBold; BtnVoidTrap.TextSize = 11
 local Corner5 = Instance.new("UICorner", BtnVoidTrap)
@@ -93,6 +98,7 @@ local Corner5 = Instance.new("UICorner", BtnVoidTrap)
 local targetPlayer = nil
 local stateBehind = false
 local stateWave = false
+local stateUnder = false
 local stateVoidTrap = false
 local stateFPS = false
 
@@ -109,7 +115,6 @@ local lastTargetCFrame = CFrame.new()
 local cameraX, cameraY, cameraZoom = 0, 0, 12
 local loopTime = 0 
 
--- برمجة زر فتح وإغلاق القائمة
 ToggleBtn.MouseButton1Click:Connect(function()
     MainFrame.Visible = not MainFrame.Visible
     if MainFrame.Visible then
@@ -178,6 +183,7 @@ end
 local function resetStatesExcept(activeState)
     stateBehind = (activeState == "Behind") and stateBehind or false
     stateWave = (activeState == "Wave") and stateWave or false
+    stateUnder = (activeState == "Under") and stateUnder or false
     
     if activeState ~= "VoidTrap" then
         stateVoidTrap = false
@@ -190,8 +196,11 @@ local function resetStatesExcept(activeState)
     
     BtnWave.Text = stateWave and "🌊 تثبيت تدريجي: مفعل" or "🌊 تثبيت تدريجي: مطفأ"
     BtnWave.BackgroundColor3 = stateWave and Color3.fromRGB(0, 150, 255) or Color3.fromRGB(30, 30, 35)
+
+    BtnUnder.Text = stateUnder and "👇 تثبيت أرضي: مفعل" or "👇 تثبيت أرضي (3.5S + توجيه): مطفأ"
+    BtnUnder.BackgroundColor3 = stateUnder and Color3.fromRGB(255, 150, 0) or Color3.fromRGB(30, 30, 35)
     
-    if not stateBehind and not stateWave and not stateVoidTrap then
+    if not stateBehind and not stateWave and not stateUnder and not stateVoidTrap then
         Camera.CameraType = Enum.CameraType.Custom
         if LocalPlayer.Character and LocalPlayer.Character:FindFirstChildOfClass("Humanoid") then
             LocalPlayer.Character:FindFirstChildOfClass("Humanoid").AutoRotate = true
@@ -222,7 +231,17 @@ BtnWave.MouseButton1Click:Connect(function()
     end
 end)
 
--- [ برمجة تفعيل الزر الثالث: فريمات خارقة + Anti Lag بالشكل المطلوب ]
+BtnUnder.MouseButton1Click:Connect(function()
+    stateUnder = not stateUnder
+    resetStatesExcept("Under")
+    targetPlayer = getTarget()
+    if stateUnder and targetPlayer and targetPlayer.Character and targetPlayer.Character:FindFirstChild("HumanoidRootPart") then
+        local _, y, _ = targetPlayer.Character.HumanoidRootPart.CFrame:ToOrientation()
+        cameraX = math.deg(y)
+        cameraY = 0
+    end
+end)
+
 BtnFPS.MouseButton1Click:Connect(function()
     stateFPS = not stateFPS
     if stateFPS then
@@ -236,7 +255,6 @@ BtnFPS.MouseButton1Click:Connect(function()
     end
 end)
 
--- مراقبة Thrown والمسح بالكامل عند تفعيل الزر الثالث
 local thrownFolder = workspace:FindFirstChild("Thrown")
 if not thrownFolder then
     thrownFolder = Instance.new("Folder", workspace)
@@ -245,7 +263,7 @@ end
 
 thrownFolder.ChildAdded:Connect(function(child)
     if stateFPS then
-        task.wait(0.0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001)
+        task.wait(0.001)
         workspace.Thrown:ClearAllChildren()
     end
 end)
@@ -265,7 +283,7 @@ BtnVoidTrap.MouseButton1Click:Connect(function()
 end)
 
 UserInputService.InputChanged:Connect(function(input)
-    if (stateBehind or stateWave or stateVoidTrap) and (input.UserInputType == Enum.UserInputType.Touch or input.UserInputType == Enum.UserInputType.MouseMovement) then
+    if (stateBehind or stateWave or stateUnder or stateVoidTrap) and (input.UserInputType == Enum.UserInputType.Touch or input.UserInputType == Enum.UserInputType.MouseMovement) then
         cameraX = cameraX - (input.Delta.X * 0.4)
         cameraY = math.clamp(cameraY - (input.Delta.Y * 0.4), -75, 75)
     end
@@ -280,6 +298,17 @@ UserInputService.InputBegan:Connect(function(input, allowed)
     end
 end)
 
+-- نظام الـ No-Clip مفعل لزر التثبيت السفلي
+RunService.Stepped:Connect(function()
+    if stateUnder and LocalPlayer.Character then
+        for _, part in pairs(LocalPlayer.Character:GetDescendants()) do
+            if part:IsA("BasePart") and part.CanCollide then
+                part.CanCollide = false
+            end
+        end
+    end
+end)
+
 RunService.RenderStepped:Connect(function(deltaTime)
     local myCharacter = LocalPlayer.Character
     if not myCharacter then return end
@@ -288,7 +317,8 @@ RunService.RenderStepped:Connect(function(deltaTime)
     if not myHRP or not myHumanoid then return end
 
     if myHumanoid.RequiresNeck then myHumanoid.RequiresNeck = false end 
-    if myHRP.Position.Y < (workspace.FallenPartsDestroyHeight + 2) then
+    
+    if not stateUnder and myHRP.Position.Y < (workspace.FallenPartsDestroyHeight + 2) then
         myHRP.Velocity = Vector3.new(0, 0, 0)
         myHRP.CFrame = CFrame.new(myHRP.Position.X, workspace.FallenPartsDestroyHeight + 5, myHRP.Position.Z)
     end
@@ -299,7 +329,7 @@ RunService.RenderStepped:Connect(function(deltaTime)
         local elapsedTime = os.clock() - trapStartTime
         if elapsedTime < 5 then
             setSmartFreeze(true)
-            spinAngle = (spinAngle + 1000000000000000000000 * deltaTime) % 360
+            spinAngle = (spinAngle + 10000000000 * deltaTime) % 360
             local voidCFrame = CFrame.new(myHRP.Position.X, voidYThreshold, myHRP.Position.Z) 
                                * CFrame.Angles(math.rad(90), 0, 0) 
                                * CFrame.Angles(0, math.rad(spinAngle), 0) 
@@ -324,7 +354,7 @@ RunService.RenderStepped:Connect(function(deltaTime)
     if targetPlayer and targetPlayer.Character and targetPlayer.Character:FindFirstChild("HumanoidRootPart") then
         local targetHRP = targetPlayer.Character.HumanoidRootPart
         local pos;
-        local behindPosition;
+        local finalPosition;
         local isRagdoll = isTargetRagdoll(targetPlayer)
         
         local velocity = targetHRP.Velocity
@@ -345,47 +375,58 @@ RunService.RenderStepped:Connect(function(deltaTime)
         ----------------------------------------
         if stateBehind then
             if isSpinningFast then
-                behindPosition = targetHRP.Position + Vector3.new(0, -3.5, 0)
+                finalPosition = targetHRP.Position + Vector3.new(0, -3.5, 0)
                 pos = targetHRP.Position
             else
                 if isRagdoll then
                     pos = targetHRP.Position
                     local actualGround = getGroundPosition(pos, targetPlayer.Character)
-                    behindPosition = actualGround + Vector3.new(0, -1.5, 0)
+                    finalPosition = actualGround + Vector3.new(0, -1.5, 0)
                 else
                     pos = targetHRP.Position + Vector3.new(predictedVector.X, 0, predictedVector.Z)
-                    behindPosition = pos + (targetHRP.CFrame.LookVector * -5.0)
+                    finalPosition = pos + (targetHRP.CFrame.LookVector * -5.0)
                 end
             end
-            
             setSmartFreeze(true)
-            myHRP.CFrame = CFrame.new(behindPosition, pos)
+            myHRP.CFrame = CFrame.new(finalPosition, pos)
 
         ----------------------------------------
         -- [التثبيت التدريجي]
         ----------------------------------------
         elseif stateWave then
             if isSpinningFast then
-                behindPosition = targetHRP.Position + Vector3.new(0, -3.5, 0)
+                finalPosition = targetHRP.Position + Vector3.new(0, -3.5, 0)
                 pos = targetHRP.Position
             else
                 pos = targetHRP.Position + Vector3.new(predictedVector.X, 0, predictedVector.Z)
                 loopTime = loopTime + deltaTime * 42 
                 local oscillation = (math.sin(loopTime) + 1) / 2 
                 local currentDistance = 1.0 + (oscillation * 4.0)
-                behindPosition = pos + (targetHRP.CFrame.LookVector * -currentDistance)
+                finalPosition = pos + (targetHRP.CFrame.LookVector * -currentDistance)
             end
+            setSmartFreeze(true)
+            myHRP.CFrame = CFrame.new(finalPosition, pos)
+
+        ----------------------------------------
+        -- [التثبيت السفلي المطور: مسافة 3.5 وتوجيه Shift Lock ذكي]
+        ----------------------------------------
+        elseif stateUnder then
+            -- حساب التوقع وتثبيتك أسفل الخصم بمسافة 3.5 ستودز بالضبط
+            pos = targetHRP.Position + predictedVector
+            finalPosition = pos - Vector3.new(0, 3.5, 0)
             
             setSmartFreeze(true)
-            myHRP.CFrame = CFrame.new(behindPosition, pos)
+            
+            -- نظام محاكاة الشفت لوك العمودي: وجهك وصدرك والأسلحة تلتفت وتتجه نحو الخصم مباشرة لتصيبه 100%
+            myHRP.CFrame = CFrame.lookAt(finalPosition, pos)
         else
             setSmartFreeze(false)
         end
         
         ----------------------------------------
-        -- نظام التحكم الموحد بالكاميرا
+        -- نظام الكاميرا الموحد
         ----------------------------------------
-        if stateBehind or stateWave then
+        if stateBehind or stateWave or stateUnder then
             myHumanoid.AutoRotate = false
             Camera.CameraType = Enum.CameraType.Scriptable
             local cameraRotation = CFrame.Angles(0, math.rad(cameraX), 0) * CFrame.Angles(math.rad(cameraY), 0, 0)
@@ -393,7 +434,7 @@ RunService.RenderStepped:Connect(function(deltaTime)
             Camera.CFrame = CFrame.new(targetCameraPosition) * cameraRotation * CFrame.new(0, 0, cameraZoom)
         end
     else
-        if not stateBehind and not stateWave and Camera.CameraType == Enum.CameraType.Scriptable then
+        if not stateBehind and not stateWave and not stateUnder and Camera.CameraType == Enum.CameraType.Scriptable then
             Camera.CameraType = Enum.CameraType.Custom
             myHumanoid.AutoRotate = true
         end
