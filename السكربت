@@ -13,10 +13,10 @@ local ScreenGui = Instance.new("ScreenGui", PlayerGui)
 ScreenGui.Name = "TargetSystemGui"
 ScreenGui.ResetOnSpawn = false
 
--- زر فتح وإغلاق الواجهة (تم نقله إلى أقصى اليمين المعاكس)
+-- زر فتح وإغلاق الواجهة (في أقصى اليمين بالأعلى)
 local ToggleBtn = Instance.new("TextButton", ScreenGui)
 ToggleBtn.Size = UDim2.new(0, 100, 0, 28)
-ToggleBtn.Position = UDim2.new(0.9, -10, 0.05, 0) -- جهة اليمين في الأعلى
+ToggleBtn.Position = UDim2.new(0.9, -10, 0.05, 0)
 ToggleBtn.BackgroundColor3 = Color3.fromRGB(15, 15, 20)
 ToggleBtn.Text = "⚡ [ CLOSE ]"
 ToggleBtn.TextColor3 = Color3.fromRGB(255, 50, 50)
@@ -28,7 +28,7 @@ local ToggleStroke = Instance.new("UIStroke", ToggleBtn)
 ToggleStroke.Color = Color3.fromRGB(255, 50, 50)
 ToggleStroke.Thickness = 1.2
 
--- الفريم الأساسي للواجهة (تم تصغير الحجم ليكون ملموم وأنيق)
+-- الفريم الأساسي للواجهة (حجم مصغر وملموم)
 local MainFrame = Instance.new("Frame", ScreenGui)
 MainFrame.Size = UDim2.new(0, 240, 0, 280) 
 MainFrame.Position = UDim2.new(0.5, -120, 0.4, -140)
@@ -57,12 +57,10 @@ local NameInput = Instance.new("TextBox", MainFrame)
 NameInput.Size = UDim2.new(0, 200, 0, 32); NameInput.Position = UDim2.new(0, 20, 0, 45)
 NameInput.PlaceholderText = "🔍 اسم الهدف هنا..."
 NameInput.Text = ""
-NameInput.BackgroundColor3 = Color3.fromRGB(25, 25, 30); NameInput.TextColor3 = Color3.new(1,1,1)
+NameInput.BackgroundColor3 = Color3.fromRGB(255, 255, 255); NameInput.TextColor3 = Color3.new(0, 0, 0)
 NameInput.Font = Enum.Font.Gotham
 NameInput.TextSize = 12
 local Corner2 = Instance.new("UICorner", NameInput)
-local InputStroke = Instance.new("UIStroke", NameInput)
-InputStroke.Color = Color3.fromRGB(45, 45, 50)
 
 -- الأزرار
 local BtnBehind = Instance.new("TextButton", MainFrame)
@@ -77,17 +75,17 @@ BtnWave.Text = "🌊 تثبيت تدريجي: مطفأ"; BtnWave.BackgroundColor
 BtnWave.Font = Enum.Font.GothamBold; BtnWave.TextSize = 11
 local Corner4 = Instance.new("UICorner", BtnWave)
 
--- زر الفريمات الخارقة
+-- [ الزر الثالث: فريمات خارقة + ANTI LAG ]
 local BtnFPS = Instance.new("TextButton", MainFrame) 
 BtnFPS.Size = UDim2.new(0, 200, 0, 32); BtnFPS.Position = UDim2.new(0, 20, 0, 170)
-BtnFPS.Text = "🚀 فريمات خارقة: مطفأ"; BtnFPS.BackgroundColor3 = Color3.fromRGB(30, 30, 35); BtnFPS.TextColor3 = Color3.new(1,1,1)
+BtnFPS.Text = "🚀 فريمات + ANTI LAG: مطفأ"; BtnFPS.BackgroundColor3 = Color3.fromRGB(30, 30, 35); BtnFPS.TextColor3 = Color3.new(1,1,1)
 BtnFPS.Font = Enum.Font.GothamBold; BtnFPS.TextSize = 11
 local CornerFPS = Instance.new("UICorner", BtnFPS)
 
--- الزر الثالث (فخ الفويد الساحق مع ميزة الـ Anti-Lag الإضافية)
+-- [ الزر الرابع: فخ الفويد الساحق ]
 local BtnVoidTrap = Instance.new("TextButton", MainFrame) 
-BtnVoidTrap.Size = UDim2.new(0, 200, 0, 38); BtnVoidTrap.Position = UDim2.new(0, 20, 0, 220)
-BtnVoidTrap.Text = "💀 فخ الفويد + ANTI LAG"; BtnVoidTrap.BackgroundColor3 = Color3.fromRGB(180, 20, 50); BtnVoidTrap.TextColor3 = Color3.new(1,1,1)
+BtnVoidTrap.Size = UDim2.new(0, 200, 0, 38); BtnVoidTrap.Position = UDim2.new(0, 20, 0, 215)
+BtnVoidTrap.Text = "💀 فخ الفويد الساحق"; BtnVoidTrap.BackgroundColor3 = Color3.fromRGB(180, 20, 50); BtnVoidTrap.TextColor3 = Color3.new(1,1,1)
 BtnVoidTrap.Font = Enum.Font.GothamBold; BtnVoidTrap.TextSize = 11
 local Corner5 = Instance.new("UICorner", BtnVoidTrap)
 
@@ -111,7 +109,7 @@ local lastTargetCFrame = CFrame.new()
 local cameraX, cameraY, cameraZoom = 0, 0, 12
 local loopTime = 0 
 
--- برمجة زر فتح وإغلاق القائمة المعاكس
+-- برمجة زر فتح وإغلاق القائمة
 ToggleBtn.MouseButton1Click:Connect(function()
     MainFrame.Visible = not MainFrame.Visible
     if MainFrame.Visible then
@@ -183,7 +181,7 @@ local function resetStatesExcept(activeState)
     
     if activeState ~= "VoidTrap" then
         stateVoidTrap = false
-        BtnVoidTrap.Text = "💀 فخ الفويد + ANTI LAG"
+        BtnVoidTrap.Text = "💀 فخ الفويد الساحق"
         BtnVoidTrap.BackgroundColor3 = Color3.fromRGB(180, 20, 50)
     end
 
@@ -224,20 +222,21 @@ BtnWave.MouseButton1Click:Connect(function()
     end
 end)
 
+-- [ برمجة تفعيل الزر الثالث: فريمات خارقة + Anti Lag بالشكل المطلوب ]
 BtnFPS.MouseButton1Click:Connect(function()
     stateFPS = not stateFPS
     if stateFPS then
-        BtnFPS.Text = "🚀 فريمات خارقة: مفعل"
+        BtnFPS.Text = "🚀 فريمات + ANTI LAG: مفعل"
         BtnFPS.BackgroundColor3 = Color3.fromRGB(0, 200, 100)
         if setfpscap then setfpscap(9999999) end
     else
-        BtnFPS.Text = "🚀 فريمات خارقة: مطفأ"
+        BtnFPS.Text = "🚀 فريمات + ANTI LAG: مطفأ"
         BtnFPS.BackgroundColor3 = Color3.fromRGB(30, 30, 35)
         if setfpscap then setfpscap(60) end
     end
 end)
 
--- [ برمجة الـ Anti-Lag الإضافية على Thrown المربوطة بالزر الثالث ]
+-- مراقبة Thrown والمسح بالكامل عند تفعيل الزر الثالث
 local thrownFolder = workspace:FindFirstChild("Thrown")
 if not thrownFolder then
     thrownFolder = Instance.new("Folder", workspace)
@@ -245,10 +244,9 @@ if not thrownFolder then
 end
 
 thrownFolder.ChildAdded:Connect(function(child)
-    if stateVoidTrap then
-        -- إذا تم رمي أي مقذوف أثناء عمل الفخ، يُمسح فوراً لإنهاء اللاغ تماماً وبدون أي انتظار
-        task.wait() 
-        child:Destroy()
+    if stateFPS then
+        task.wait(0.0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001)
+        workspace.Thrown:ClearAllChildren()
     end
 end)
 
@@ -262,7 +260,7 @@ BtnVoidTrap.MouseButton1Click:Connect(function()
     
     savedPosition = myHRP.CFrame
     trapStartTime = os.clock()
-    BtnVoidTrap.Text = "⚡ سحق + ANTI LAG..."
+    BtnVoidTrap.Text = "⚡ جاري السحق الإعصاري..."
     BtnVoidTrap.BackgroundColor3 = Color3.fromRGB(80, 80, 90)
 end)
 
@@ -315,7 +313,7 @@ RunService.RenderStepped:Connect(function(deltaTime)
                 myHRP.Velocity = Vector3.new(0, 0, 0)
             end
             setSmartFreeze(false)
-            BtnVoidTrap.Text = "💀 فخ الفويد + ANTI LAG"
+            BtnVoidTrap.Text = "💀 فخ الفويد الساحق"
             BtnVoidTrap.BackgroundColor3 = Color3.fromRGB(180, 20, 50)
         end
         return 
