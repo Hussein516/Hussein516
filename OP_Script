@@ -1,6 +1,4 @@
 -- [ CYBER SYSTEM: INFINITY OMEGA EDITION + GROUND HACK TECH + MATRIX VOID BARRIER ]
--- [ الأداء: نسخة محسنة كلياً بأعلى معدل استجابة وتدوير إعصاري قاتل ]
-
 local Players = game:GetService("Players")
 local RunService = game:GetService("RunService")
 local UserInputService = game:GetService("UserInputService")
@@ -8,182 +6,99 @@ local LocalPlayer = Players.LocalPlayer
 local Camera = workspace.CurrentCamera
 local PlayerGui = LocalPlayer:WaitForChild("PlayerGui")
 
--- [ نظام منع تكرار السكربت وتسريب الذاكرة (Anti-Memory Leak) ]
-getgenv().CyberSystemSettings = getgenv().CyberSystemSettings or {}
-if getgenv().CyberSystemSettings.Connections then
-    for _, conn in pairs(getgenv().CyberSystemSettings.Connections) do
-        if conn then conn:Disconnect() end
-    end
+-- [ نظام منع تكرار السكربت ]
+getgenv().CyberSettings = getgenv().CyberSettings or {}
+if getgenv().CyberSettings.Conns then
+    for _, conn in pairs(getgenv().CyberSettings.Conns) do if conn then conn:Disconnect() end end
 end
-getgenv().CyberSystemSettings.Connections = {}
-local conns = getgenv().CyberSystemSettings.Connections
+getgenv().CyberSettings.Conns = {}
+local conns = getgenv().CyberSettings.Conns
 
-if PlayerGui:FindFirstChild("TargetSystemGui") then PlayerGui.TargetSystemGui:Destroy() end
+if PlayerGui:FindFirstChild("TargetSysGui") then PlayerGui.TargetSysGui:Destroy() end
 if workspace:FindFirstChild("CyberVoidBarrier") then workspace.CyberVoidBarrier:Destroy() end
 
--- [ تسريع استدعاء العمليات الرياضية والمصفوفات ]
-local math_sin, math_cos, math_rad, math_clamp, math_random, math_abs = math.sin, math.cos, math.rad, math.clamp, math.random, math.abs
+local math_sin, math_cos, math_rad, math_clamp, math_abs = math.sin, math.cos, math.rad, math.clamp, math.abs
 local CFrame_new, CFrame_Angles, Vector3_new = CFrame.new, CFrame.Angles, Vector3.new
 
--- [ بناء جدار الحماية الفيزيائي فوق الفويد ]
-local Barrier = Instance.new("Part")
-Barrier.Name = "CyberVoidBarrier"
-Barrier.Size = Vector3_new(5000, 2, 5000)
+-- [ جدار الفويد الفيزيائي ]
+local Barrier = Instance.new("Part", workspace)
+Barrier.Name = "CyberVoidBarrier"; Barrier.Size = Vector3_new(5000, 2, 5000)
 Barrier.Position = Vector3_new(0, workspace.FallenPartsDestroyHeight + 6.5, 0)
-Barrier.Anchored = true
-Barrier.CanCollide = true
-Barrier.Material = Enum.Material.ForceField
-Barrier.Color = Color3.fromRGB(0, 170, 255)
-Barrier.Transparency = 0.85
-Barrier.Parent = workspace
+Barrier.Anchored = true; Barrier.CanCollide = true
+Barrier.Material = Enum.Material.ForceField; Barrier.Color = Color3.fromRGB(0, 170, 255); Barrier.Transparency = 0.85
 
--- [ الواجهة الأصلية المصغرة والأنيقة ]
-local ScreenGui = Instance.new("ScreenGui", PlayerGui)
-ScreenGui.Name = "TargetSystemGui"
-ScreenGui.ResetOnSpawn = false
-
+-- [ الواجهة ]
+local ScreenGui = Instance.new("ScreenGui", PlayerGui); ScreenGui.Name = "TargetSysGui"; ScreenGui.ResetOnSpawn = false
 local ToggleBtn = Instance.new("TextButton", ScreenGui)
-ToggleBtn.Size = UDim2.new(0, 85, 0, 24)
-ToggleBtn.Position = UDim2.new(0.9, -10, 0.05, 0)
-ToggleBtn.BackgroundColor3 = Color3.fromRGB(10, 10, 15)
-ToggleBtn.Text = "⚡ [ CLOSE ]"
-ToggleBtn.TextColor3 = Color3.fromRGB(255, 60, 60)
-ToggleBtn.Font = Enum.Font.GothamBold
-ToggleBtn.TextSize = 9
-local ToggleCorner = Instance.new("UICorner", ToggleBtn)
-ToggleCorner.CornerRadius = UDim.new(0, 4)
-local ToggleStroke = Instance.new("UIStroke", ToggleBtn)
-ToggleStroke.Color = Color3.fromRGB(255, 60, 60)
-ToggleStroke.Thickness = 1
+ToggleBtn.Size = UDim2.new(0, 85, 0, 24); ToggleBtn.Position = UDim2.new(0.9, -10, 0.05, 0); ToggleBtn.BackgroundColor3 = Color3.fromRGB(10, 10, 15); ToggleBtn.Text = "⚡ [ CLOSE ]"; ToggleBtn.TextColor3 = Color3.fromRGB(255, 60, 60); ToggleBtn.Font = Enum.Font.GothamBold; ToggleBtn.TextSize = 9
+Instance.new("UICorner", ToggleBtn).CornerRadius = UDim.new(0, 4); Instance.new("UIStroke", ToggleBtn).Color = Color3.fromRGB(255, 60, 60)
 
 local MainFrame = Instance.new("Frame", ScreenGui)
-MainFrame.Size = UDim2.new(0, 210, 0, 290)
-MainFrame.Position = UDim2.new(0.5, -105, 0.4, -145)
-MainFrame.BackgroundColor3 = Color3.fromRGB(10, 10, 14)
-MainFrame.BorderSizePixel = 0
-MainFrame.Active = true
-MainFrame.Draggable = true
-
-local Corner = Instance.new("UICorner", MainFrame)
-Corner.CornerRadius = UDim.new(0, 6)
-local UIStroke = Instance.new("UIStroke", MainFrame)
-UIStroke.Color = Color3.fromRGB(0, 170, 255)
-UIStroke.Thickness = 1.2
+MainFrame.Size = UDim2.new(0, 210, 0, 290); MainFrame.Position = UDim2.new(0.5, -105, 0.4, -145); MainFrame.BackgroundColor3 = Color3.fromRGB(10, 10, 14); MainFrame.Active = true; MainFrame.Draggable = true
+Instance.new("UICorner", MainFrame).CornerRadius = UDim.new(0, 6); Instance.new("UIStroke", MainFrame).Color = Color3.fromRGB(0, 170, 255)
 
 local Title = Instance.new("TextLabel", MainFrame)
-Title.Size = UDim2.new(1, 0, 0, 26)
-Title.Text = "💥 CYBER SYSTEM OMEGA"
-Title.TextColor3 = Color3.fromRGB(0, 170, 255)
-Title.TextSize = 10
-Title.Font = Enum.Font.GothamBold
-Title.BackgroundTransparency = 1
+Title.Size = UDim2.new(1, 0, 0, 26); Title.Text = "💥 CYBER SYSTEM OMEGA"; Title.TextColor3 = Color3.fromRGB(0, 170, 255); Title.TextSize = 10; Title.Font = Enum.Font.GothamBold; Title.BackgroundTransparency = 1
 
--- [ مربع البحث والتحكم ]
 local NameInput = Instance.new("TextBox", MainFrame)
-NameInput.Size = UDim2.new(0, 174, 0, 24); NameInput.Position = UDim2.new(0, 18, 0, 32)
-NameInput.PlaceholderText = "🔍 اسم الهدف هنا..."
-NameInput.Text = ""
-NameInput.BackgroundColor3 = Color3.fromRGB(240, 240, 240); NameInput.TextColor3 = Color3.new(0, 0, 0)
-NameInput.Font = Enum.Font.Gotham
-NameInput.TextSize = 10
+NameInput.Size = UDim2.new(0, 174, 0, 24); NameInput.Position = UDim2.new(0, 18, 0, 32); NameInput.PlaceholderText = "🔍 اسم الهدف هنا..."; NameInput.Text = ""; NameInput.BackgroundColor3 = Color3.fromRGB(240, 240, 240); NameInput.TextColor3 = Color3.new(0,0,0); NameInput.Font = Enum.Font.Gotham; NameInput.TextSize = 10
 Instance.new("UICorner", NameInput)
 
-local BtnBehind = Instance.new("TextButton", MainFrame)
-BtnBehind.Size = UDim2.new(0, 174, 0, 24); BtnBehind.Position = UDim2.new(0, 18, 0, 62)
-BtnBehind.Text = "🔒 تثبيت عادي: مطفأ"; BtnBehind.BackgroundColor3 = Color3.fromRGB(20, 20, 25); BtnBehind.TextColor3 = Color3.new(1,1,1)
-BtnBehind.Font = Enum.Font.GothamBold; BtnBehind.TextSize = 9
-Instance.new("UICorner", BtnBehind)
+local function createBtn(text, yPos, color)
+    local btn = Instance.new("TextButton", MainFrame)
+    btn.Size = UDim2.new(0, 174, 0, 24); btn.Position = UDim2.new(0, 18, 0, yPos); btn.Text = text; btn.BackgroundColor3 = Color3.fromRGB(20, 20, 25); btn.TextColor3 = color; btn.Font = Enum.Font.GothamBold; btn.TextSize = 9
+    Instance.new("UICorner", btn)
+    return btn
+end
 
-local BtnWave = Instance.new("TextButton", MainFrame) 
-BtnWave.Size = UDim2.new(0, 174, 0, 24); BtnWave.Position = UDim2.new(0, 18, 0, 91)
-BtnWave.Text = "🌊 تثبيت تدريجي: مطفأ"; BtnWave.BackgroundColor3 = Color3.fromRGB(20, 20, 25); BtnWave.TextColor3 = Color3.new(1,1,1)
-BtnWave.Font = Enum.Font.GothamBold; BtnWave.TextSize = 9
-Instance.new("UICorner", BtnWave)
-
-local BtnUnder = Instance.new("TextButton", MainFrame) 
-BtnUnder.Size = UDim2.new(0, 174, 0, 24); BtnUnder.Position = UDim2.new(0, 18, 0, 120)
-BtnUnder.Text = "👇 تثبيت أرضي (3.5S): مطفأ"; BtnUnder.BackgroundColor3 = Color3.fromRGB(20, 20, 25); BtnUnder.TextColor3 = Color3.fromRGB(255, 180, 0)
-BtnUnder.Font = Enum.Font.GothamBold; BtnUnder.TextSize = 9
-Instance.new("UICorner", BtnUnder)
-
-local BtnAntiBack = Instance.new("TextButton", MainFrame) 
-BtnAntiBack.Size = UDim2.new(0, 174, 0, 24); BtnAntiBack.Position = UDim2.new(0, 18, 0, 149)
-BtnAntiBack.Text = "⚔️ ضد الهكر الخلفي (Desync): مطفأ"; BtnAntiBack.BackgroundColor3 = Color3.fromRGB(20, 20, 25); BtnAntiBack.TextColor3 = Color3.fromRGB(0, 255, 150)
-BtnAntiBack.Font = Enum.Font.GothamBold; BtnAntiBack.TextSize = 9
-Instance.new("UICorner", BtnAntiBack)
-
-local BtnFPS = Instance.new("TextButton", MainFrame) 
-BtnFPS.Size = UDim2.new(0, 174, 0, 24); BtnFPS.Position = UDim2.new(0, 18, 0, 178)
-BtnFPS.Text = "🚀 فريمات + ANTI LAG: مطفأ"; BtnFPS.BackgroundColor3 = Color3.fromRGB(20, 20, 25); BtnFPS.TextColor3 = Color3.new(1,1,1)
-BtnFPS.Font = Enum.Font.GothamBold; BtnFPS.TextSize = 9
-Instance.new("UICorner", BtnFPS)
-
-local BtnVoidTrap = Instance.new("TextButton", MainFrame) 
-BtnVoidTrap.Size = UDim2.new(0, 174, 0, 30); BtnVoidTrap.Position = UDim2.new(0, 18, 0, 207)
-BtnVoidTrap.Text = "💀 إعصار النوم المغزلي القاتل (5S)"; BtnVoidTrap.BackgroundColor3 = Color3.fromRGB(160, 15, 40); BtnVoidTrap.TextColor3 = Color3.new(1,1,1)
-BtnVoidTrap.Font = Enum.Font.GothamBold; BtnVoidTrap.TextSize = 9
-Instance.new("UICorner", BtnVoidTrap)
+local BtnBehind = createBtn("🔒 تثبيت عادي: مطفأ", 62, Color3.new(1,1,1))
+local BtnWave = createBtn("🌊 تثبيت تدريجي: مطفأ", 91, Color3.new(1,1,1))
+local BtnUnder = createBtn("👇 تثبيت أرضي (3.5S): مطفأ", 120, Color3.fromRGB(255, 180, 0))
+local BtnAntiBack = createBtn("⚔️ ضد الهكر الخلفي: مطفأ", 149, Color3.fromRGB(0, 255, 150))
+local BtnFPS = createBtn("🚀 فريمات + ANTI LAG: مطفأ", 178, Color3.new(1,1,1))
+local BtnVoidTrap = createBtn("💀 إعصار النوم المغزلي القاتل (5S)", 207, Color3.new(1,1,1))
+BtnVoidTrap.Size = UDim2.new(0, 174, 0, 30); BtnVoidTrap.BackgroundColor3 = Color3.fromRGB(160, 15, 40)
 
 -- [ المتغيرات الأساسية ]
 local targetPlayer = nil
 local stateBehind, stateWave, stateUnder, stateAntiBack, stateVoidTrap, stateFPS = false, false, false, false, false, false
 local savedPosition = nil
-local trapStartTime = 0
-local spinAngle = 0
-local underStartTime = 0
-
+local trapStartTime, spinAngle = 0, 0
 local PREDICTION_TIME = 0.28
-local lastTargetVelocity = Vector3_new()
-local targetAcceleration = Vector3_new()
-local cameraX, cameraY, cameraZoom = 0, 0, 11
-local loopTime = 0
+local lastTargetVelocity, targetAcceleration = Vector3_new(), Vector3_new()
+local cameraX, cameraY, cameraZoom, loopTime = 0, 0, 11, 0
 
--- [ إدارة النوافذ ]
 ToggleBtn.MouseButton1Click:Connect(function()
     MainFrame.Visible = not MainFrame.Visible
     ToggleBtn.Text = MainFrame.Visible and "⚡ [ CLOSE ]" or "⚡ [ OPEN ]"
     ToggleBtn.TextColor3 = MainFrame.Visible and Color3.fromRGB(255, 60, 60) or Color3.fromRGB(0, 255, 180)
-    ToggleBtn.UIStroke.Color = MainFrame.Visible and Color3.fromRGB(255, 60, 60) or Color3.fromRGB(0, 255, 180)
 end)
 
 local function isTargetRagdoll(target)
     if not target or not target.Character then return false end
     local humanoid = target.Character:FindFirstChildOfClass("Humanoid")
     local hrp = target.Character:FindFirstChild("HumanoidRootPart")
-    if humanoid and hrp then
-        return humanoid.PlatformStand or humanoid.Sit or (hrp.Velocity.Magnitude > 0.05 and humanoid.WalkSpeed == 0)
-    end
-    return false
+    return humanoid and hrp and (humanoid.PlatformStand or humanoid.Sit or (hrp.Velocity.Magnitude > 0.05 and humanoid.WalkSpeed == 0))
 end
 
 local function getTarget()
     local text = NameInput.Text:lower()
     if text == "" then return nil end
-    local playersList = Players:GetPlayers()
-    for i = 1, #playersList do
-        local p = playersList[i]
-        if p ~= LocalPlayer and (p.Name:lower():find(text) or p.DisplayName:lower():find(text)) then
-            return p
-        end
+    for _, p in pairs(Players:GetPlayers()) do
+        if p ~= LocalPlayer and (p.Name:lower():find(text) or p.DisplayName:lower():find(text)) then return p end
     end
     return nil
 end
 
 local function setSmartFreeze(freeze)
-    local character = LocalPlayer.Character
-    if not character then return end
-    local humanoid = character:FindFirstChildOfClass("Humanoid")
-    if not humanoid then return end
-    
-    local animateScript = character:FindFirstChild("Animate")
-    if animateScript then animateScript.Disabled = freeze end
-    
-    local animator = humanoid:FindFirstChildOfClass("Animator") or humanoid
-    local tracks = animator:GetPlayingAnimationTracks()
-    for i = 1, #tracks do
-        if freeze then tracks[i]:AdjustSpeed(0) else tracks[i]:AdjustSpeed(1) end
-    end
-    humanoid.WalkSpeed = freeze and 0 or 16
+    local char = LocalPlayer.Character
+    if not char then return end
+    local hum = char:FindFirstChildOfClass("Humanoid")
+    if not hum then return end
+    if char:FindFirstChild("Animate") then char.Animate.Disabled = freeze end
+    local animator = hum:FindFirstChildOfClass("Animator") or hum
+    for _, track in pairs(animator:GetPlayingAnimationTracks()) do track:AdjustSpeed(freeze and 0 or 1) end
+    hum.WalkSpeed = freeze and 0 or 16
 end
 
 local function resetStatesExcept(activeState)
@@ -191,249 +106,186 @@ local function resetStatesExcept(activeState)
     stateWave = (activeState == "Wave") and stateWave or false
     stateUnder = (activeState == "Under") and stateUnder or false
     stateAntiBack = (activeState == "AntiBack") and stateAntiBack or false
-    
-    if activeState ~= "VoidTrap" then
-        stateVoidTrap = false
-        BtnVoidTrap.Text = "💀 إعصار النوم المغزلي القاتل (5S)"
-        BtnVoidTrap.BackgroundColor3 = Color3.fromRGB(160, 15, 40)
-    end
+    if activeState ~= "VoidTrap" then stateVoidTrap = false; BtnVoidTrap.Text = "💀 إعصار النوم المغزلي القاتل (5S)"; BtnVoidTrap.BackgroundColor3 = Color3.fromRGB(160, 15, 40) end
 
     BtnBehind.Text = stateBehind and "🔒 تثبيت عادي: مفعل" or "🔒 تثبيت عادي: مطفأ"
     BtnBehind.BackgroundColor3 = stateBehind and Color3.fromRGB(0, 140, 255) or Color3.fromRGB(20, 20, 25)
-    
     BtnWave.Text = stateWave and "🌊 تثبيت تدريجي: مفعل" or "🌊 تثبيت تدريجي: مطفأ"
     BtnWave.BackgroundColor3 = stateWave and Color3.fromRGB(0, 140, 255) or Color3.fromRGB(20, 20, 25)
-
     BtnUnder.Text = stateUnder and "👇 تثبيت أرضي: مفعل" or "👇 تثبيت أرضي (3.5S): مطفأ"
     BtnUnder.BackgroundColor3 = stateUnder and Color3.fromRGB(255, 140, 0) or Color3.fromRGB(20, 20, 25)
-
-    BtnAntiBack.Text = stateAntiBack and "⚔️ ضد الهكر الخلفي: مفعل" or "⚔️ ضد الهكر الخلفي (Desync): مطفأ"
+    BtnAntiBack.Text = stateAntiBack and "⚔️ ضد الهكر الخلفي: مفعل" or "⚔️ ضد الهكر الخلفي: مطفأ"
     BtnAntiBack.BackgroundColor3 = stateAntiBack and Color3.fromRGB(0, 180, 100) or Color3.fromRGB(20, 20, 25)
     
     if not stateBehind and not stateWave and not stateUnder and not stateAntiBack and not stateVoidTrap then
         Camera.CameraType = Enum.CameraType.Custom
-        if LocalPlayer.Character and LocalPlayer.Character:FindFirstChildOfClass("Humanoid") then
-            LocalPlayer.Character:FindFirstChildOfClass("Humanoid").AutoRotate = true
-        end
+        if LocalPlayer.Character and LocalPlayer.Character:FindFirstChildOfClass("Humanoid") then LocalPlayer.Character:FindFirstChildOfClass("Humanoid").AutoRotate = true end
         setSmartFreeze(false)
     end
 end
 
 BtnBehind.MouseButton1Click:Connect(function() stateBehind = not stateBehind; resetStatesExcept("Behind"); targetPlayer = getTarget() end)
 BtnWave.MouseButton1Click:Connect(function() stateWave = not stateWave; resetStatesExcept("Wave"); targetPlayer = getTarget() end)
-BtnUnder.MouseButton1Click:Connect(function() 
-    stateUnder = not stateUnder 
-    if stateUnder then underStartTime = os.clock() end
-    resetStatesExcept("Under"); targetPlayer = getTarget() 
-end)
+BtnUnder.MouseButton1Click:Connect(function() stateUnder = not stateUnder; resetStatesExcept("Under"); targetPlayer = getTarget() end)
 BtnAntiBack.MouseButton1Click:Connect(function() stateAntiBack = not stateAntiBack; resetStatesExcept("AntiBack"); targetPlayer = getTarget() end)
 
 BtnFPS.MouseButton1Click:Connect(function()
     stateFPS = not stateFPS
-    if stateFPS then
-        BtnFPS.Text = "🚀 فريمات + ANTI LAG: مفعل"
-        BtnFPS.BackgroundColor3 = Color3.fromRGB(0, 180, 90)
-        if setfpscap then setfpscap(999) end
-    else
-        BtnFPS.Text = "🚀 فريمات + ANTI LAG: مطفأ"
-        BtnFPS.BackgroundColor3 = Color3.fromRGB(20, 20, 25)
-        if setfpscap then setfpscap(60) end
-    end
+    BtnFPS.Text = stateFPS and "🚀 فريمات + ANTI LAG: مفعل" or "🚀 فريمات + ANTI LAG: مطفأ"
+    BtnFPS.BackgroundColor3 = stateFPS and Color3.fromRGB(0, 180, 90) or Color3.fromRGB(20, 20, 25)
+    if setfpscap then setfpscap(stateFPS and 999 or 60) end
 end)
 
--- [ إدارة تحسين الفريمات الذكية بدون ضغط ]
-local thrownFolder = workspace:FindFirstChild("Thrown")
-if thrownFolder then
-    local fpsConn = thrownFolder.ChildAdded:Connect(function(child) 
-        if stateFPS then 
-            task.defer(function() child:Destroy() end)
-        end 
-    end)
-    table.insert(conns, fpsConn)
+if workspace:FindFirstChild("Thrown") then
+    table.insert(conns, workspace.Thrown.ChildAdded:Connect(function(child) if stateFPS then task.defer(function() child:Destroy() end) end end))
 end
 
--- [ تفعيل ميزة إعصار الفويد المعدل ]
 BtnVoidTrap.MouseButton1Click:Connect(function()
     if stateVoidTrap then return end
-    local myCharacter = LocalPlayer.Character
-    local myHRP = myCharacter and myCharacter:FindFirstChild("HumanoidRootPart")
+    local myHRP = LocalPlayer.Character and LocalPlayer.Character:FindFirstChild("HumanoidRootPart")
     if not myHRP then return end
-    
-    stateVoidTrap = true
-    resetStatesExcept("VoidTrap")
-    savedPosition = myHRP.CFrame
-    trapStartTime = os.clock()
-    BtnVoidTrap.Text = "⚡ الإعصار نشط (5 ثوانٍ)..."
-    BtnVoidTrap.BackgroundColor3 = Color3.fromRGB(255, 0, 50)
+    stateVoidTrap = true; resetStatesExcept("VoidTrap")
+    savedPosition = myHRP.CFrame; trapStartTime = os.clock()
+    BtnVoidTrap.Text = "⚡ الإعصار نشط (5 ثوانٍ)..."; BtnVoidTrap.BackgroundColor3 = Color3.fromRGB(255, 0, 50)
 end)
 
-local inputConn = UserInputService.InputChanged:Connect(function(input)
+table.insert(conns, UserInputService.InputChanged:Connect(function(input)
     if (stateBehind or stateWave or stateUnder or stateAntiBack or stateVoidTrap) and (input.UserInputType == Enum.UserInputType.Touch or input.UserInputType == Enum.UserInputType.MouseMovement) then
-        cameraX = cameraX - (input.Delta.X * 0.4)
-        cameraY = math_clamp(cameraY - (input.Delta.Y * 0.4), -75, 75)
+        cameraX = cameraX - (input.Delta.X * 0.4); cameraY = math_clamp(cameraY - (input.Delta.Y * 0.4), -75, 75)
     end
-end)
-table.insert(conns, inputConn)
+end))
 
--- [ نظام التحكم الفيزيائي والاصطدام المحسن ]
-local steppedConnection = RunService.Stepped:Connect(function()
+table.insert(conns, RunService.Stepped:Connect(function()
     local char = LocalPlayer.Character
     if not char then return end
-    
     local myHRP = char:FindFirstChild("HumanoidRootPart")
     
-    if stateUnder or stateVoidTrap or stateAntiBack or (targetPlayer and targetPlayer.Character and isTargetRagdoll(targetPlayer)) then
-        for _, p in pairs(char:GetChildren()) do
-            if p:IsA("BasePart") then
-                p.CanCollide = false
-            end
-        end
+    if stateUnder or stateVoidTrap or stateAntiBack or (targetPlayer and isTargetRagdoll(targetPlayer)) then
+        for _, p in pairs(char:GetChildren()) do if p:IsA("BasePart") then p.CanCollide = false end end
     end
     
-    if myHRP and stateVoidTrap then
-        myHRP.CanCollide = true
-    end
+    if myHRP and stateVoidTrap then myHRP.CanCollide = true end
     
     if not stateVoidTrap then
         if myHRP and myHRP.Anchored then myHRP.Anchored = false end
         local hum = char:FindFirstChildOfClass("Humanoid")
-        if hum then
-            if hum.PlatformStand then hum.PlatformStand = false end
-            if hum.Sit then hum.Sit = false end
-        end
+        if hum then hum.PlatformStand = false; hum.Sit = false end
     end
-end)
-table.insert(conns, steppedConnection)
+end))
 
--- [ المحرك الأساسي فائق السرعة والأداء ]
-local renderSteppedConnection = RunService.RenderStepped:Connect(function(deltaTime)
-    local myCharacter = LocalPlayer.Character
-    if not myCharacter then return end
-    local myHRP = myCharacter:FindFirstChild("HumanoidRootPart")
-    local myHumanoid = myCharacter:FindFirstChildOfClass("Humanoid")
-    if not myHRP or not myHumanoid then return end
+-- [ المحرك الأساسي وأنظمة الفحص المحسنة ]
+table.insert(conns, RunService.RenderStepped:Connect(function(deltaTime)
+    local myChar = LocalPlayer.Character
+    if not myChar then return end
+    local myHRP, myHum = myChar:FindFirstChild("HumanoidRootPart"), myChar:FindFirstChildOfClass("Humanoid")
+    if not myHRP or not myHum then return end
+    myHum.RequiresNeck = false 
 
-    if myHumanoid.RequiresNeck then myHumanoid.RequiresNeck = false end 
-
-    -- الحارس الفيزيائي المطلق
     local absoluteMinY = Barrier.Position.Y + 1.5
     if myHRP.Position.Y < absoluteMinY and not stateVoidTrap then
-        myHRP.Velocity = Vector3_new(0, 0, 0)
-        myHRP.CFrame = CFrame_new(myHRP.Position.X, absoluteMinY + 2.0, myHRP.Position.Z)
+        myHRP.Velocity = Vector3_new(0, 0, 0); myHRP.CFrame = CFrame_new(myHRP.Position.X, absoluteMinY + 2.0, myHRP.Position.Z)
     end
 
-    -- [ ميكانيكية زر الفويد ]
     if stateVoidTrap then
-        local elapsedTime = os.clock() - trapStartTime
-        if elapsedTime < 5 then
+        if os.clock() - trapStartTime < 5 then
             setSmartFreeze(true)
             spinAngle = (spinAngle + 30000 * deltaTime) % 360
-            -- التثبيت الآمن تماماً فوق حد الموت بـ 1.2 ستودز بوضعية النوم (المستلقية)
-            local fixedVoidPosition = Vector3_new(savedPosition.X, workspace.FallenPartsDestroyHeight + 1.2, savedPosition.Z)
-            myHRP.CFrame = CFrame_new(fixedVoidPosition) * CFrame_Angles(math_rad(-90), math_rad(spinAngle), 0)
-            myHRP.Velocity = Vector3_new(0, 0, 0)
-            myHRP.RotVelocity = Vector3_new(0, 99999, 0)
-            myHRP.Anchored = true
+            local fixedVoidPos = Vector3_new(savedPosition.X, workspace.FallenPartsDestroyHeight + 1.2, savedPosition.Z)
+            myHRP.CFrame = CFrame_new(fixedVoidPos) * CFrame_Angles(math_rad(-90), math_rad(spinAngle), 0)
+            myHRP.Velocity = Vector3_new(0, 0, 0); myHRP.RotVelocity = Vector3_new(0, 99999, 0); myHRP.Anchored = true
         else
-            stateVoidTrap = false
-            myHRP.Anchored = false
+            stateVoidTrap = false; myHRP.Anchored = false
             if savedPosition then myHRP.CFrame = savedPosition end
             setSmartFreeze(false)
-            BtnVoidTrap.Text = "💀 إعصار النوم المغزلي القاتل (5S)"
-            BtnVoidTrap.BackgroundColor3 = Color3.fromRGB(160, 15, 40)
+            BtnVoidTrap.Text = "💀 إعصار النوم المغزلي القاتل (5S)"; BtnVoidTrap.BackgroundColor3 = Color3.fromRGB(160, 15, 40)
         end
         return 
     end
 
-    -- [ إغلاق التثبيت الأرضي بعد 3.5 ثانية ]
-    if stateUnder and (os.clock() - underStartTime) >= 3.5 then
-        stateUnder = false
-        resetStatesExcept("None")
-    end
-
-    -- [ بقية أنظمة التثبيت والتتبع الذكي ]
     if not targetPlayer or not targetPlayer.Character then targetPlayer = getTarget() end
     
     if targetPlayer and targetPlayer.Character and targetPlayer.Character:FindFirstChild("HumanoidRootPart") then
         local targetHRP = targetPlayer.Character.HumanoidRootPart
-        
         local velocity = targetHRP.Velocity
         targetAcceleration = (velocity - lastTargetVelocity) / math.max(deltaTime, 0.001)
         lastTargetVelocity = velocity
         if targetAcceleration.Magnitude > 150 then targetAcceleration = targetAcceleration.Unit * 150 end
-        local predictedVector = velocity * PREDICTION_TIME + 0.5 * targetAcceleration * (PREDICTION_TIME ^ 2)
-        local predictedPos = targetHRP.Position + predictedVector
+        local predictedPos = targetHRP.Position + (velocity * PREDICTION_TIME + 0.5 * targetAcceleration * (PREDICTION_TIME ^ 2))
 
-        -- [[ نظام الفحص والحماية التلقائية المطور بدقة عالية جداً ]]
-        local autoDefenseActive = false
-        local chosenDistance = -5.0
+        local autoDef = false
+        local chosenDist = -5.0
 
         local liveFolder = workspace:FindFirstChild("Live")
         if liveFolder then
             local targetFolder = liveFolder:FindFirstChild(targetPlayer.Name)
             if targetFolder then
-                
-                -- فحص الحقيبة والأداة الأولى للخصم
-                local firstToolName = ""
-                local targetBackpack = targetPlayer:FindFirstChild("Backpack")
-                if targetBackpack then
-                    local tools = targetBackpack:GetChildren()
-                    if tools[1] and tools[1]:IsA("Tool") then
-                        firstToolName = tools[1].Name
-                    end
+                local firstTool = ""
+                local bp = targetPlayer:FindFirstChild("Backpack")
+                if bp and bp:GetChildren()[1] and bp:GetChildren()[1]:IsA("Tool") then
+                    firstTool = bp:GetChildren()[1].Name
                 end
 
-                -- قراءة جميع الكائنات الموجودة دفعة واحدة لتحسين الأداء
-                local states = {
-                    Freeze = targetFolder:FindFirstChild("Freeze"),
-                    GrabWeapon = targetFolder:FindFirstChild("GrabWeapon"),
-                    GreenAura = targetFolder:FindFirstChild("GreenAura"),
-                    Free = targetFolder:FindFirstChild("free"),
-                    BackpackOpen = targetFolder:FindFirstChild("BackpackOpen"),
-                    HunterCounter = targetFolder:FindFirstChild("HunterCounter"),
-                    Slowed = targetFolder:FindFirstChild("Slowed"),
-                    ProjectileCounter = targetFolder:FindFirstChild("ProjectileCounter"),
-                    HunterFists = targetFolder:FindFirstChild("HunterFists"),
-                    NoBlock = targetFolder:FindFirstChild("NoBlock"),
-                    NoPunch = targetFolder:FindFirstChild("NoPunch"),
-                    NoDash = targetFolder:FindFirstChild("NoDash"),
-                    BarrageBind = targetFolder:FindFirstChild("BarrageBind"),
-                    HiddenFist = targetFolder:FindFirstChild("HiddenFist"),
-                    AtomicCounter = targetFolder:FindFirstChild("AtomicCounter"),
-                    BodyGyroBind = targetFolder:FindFirstChild("BodyGyroBind")
-                }
+                local hasFreeze = targetFolder:FindFirstChild("Freeze") ~= nil
+                local hasGrabWep = targetFolder:FindFirstChild("GrabWeapon") ~= nil
+                local hasGreen = targetFolder:FindFirstChild("GreenAura") ~= nil
+                local hasFree = targetFolder:FindFirstChild("free") ~= nil
+                local hasBackpack = targetFolder:FindFirstChild("BackpackOpen") ~= nil
+                local hasHunter = targetFolder:FindFirstChild("HunterCounter") ~= nil
 
-                -- قواعد تفعيل Freeze المسموح بها
-                local freezeAllowed = states.Freeze and (states.GrabWeapon or states.GreenAura or firstToolName == "Weboom" or firstToolName == "Doom Dive")
+                -- شروط التجميد
+                local freezeOK = hasFreeze and (hasGrabWep or hasGreen or firstTool == "Weboom" or firstTool == "Doom Dive")
 
-                -- 1. إذا كان يحمل Bullet Barrage، يجب تفعيل الحماية والاكتفاء بـ Freeze كشرط أساسي
-                if firstToolName == "Bullet Barrage" then
-                    if freezeAllowed then
-                        autoDefenseActive = true
-                        chosenDistance = -10.0
-                        if states.BackpackOpen then
-                            chosenDistance = -20.0
-                        end
-                    end
-                else
-                    -- 2. تفعيل الحماية لأي كائن آخر موجود (ليس Freeze فقط)
-                    if states.Slowed or states.ProjectileCounter or states.HunterFists or states.NoBlock or 
-                       states.NoPunch or states.NoDash or states.BarrageBind or states.HiddenFist or 
-                       states.AtomicCounter or states.BodyGyroBind or freezeAllowed or states.GreenAura then
-                        autoDefenseActive = true
-                        chosenDistance = -10.0
-                    end
+                -- كل الكائنات الأخرى تعمل دائماً 
+                local stdObjs = targetFolder:FindFirstChild("Slowed") or targetFolder:FindFirstChild("ProjectileCounter") or targetFolder:FindFirstChild("HunterFists") or targetFolder:FindFirstChild("NoBlock") or targetFolder:FindFirstChild("NoPunch") or targetFolder:FindFirstChild("NoDash") or targetFolder:FindFirstChild("BarrageBind") or targetFolder:FindFirstChild("HiddenFist") or targetFolder:FindFirstChild("AtomicCounter") or targetFolder:FindFirstChild("BodyGyroBind")
 
-                    -- 3. قوانين المسافات الاستثنائية
-                    if states.HunterCounter then
-                        autoDefenseActive = true
-                        chosenDistance = -13.0
-                    end
+                if stdObjs or freezeOK or hasGreen then
+                    autoDef = true; chosenDist = -10.0
+                end
+                
+                -- المسافات المخصصة (الأولوية لها)
+                if hasHunter then autoDef = true; chosenDist = -13.0 end
+                if hasFreeze and hasBackpack then autoDef = true; chosenDist = -20.0 end
+                if hasFree and firstTool == "Doom Dive" then autoDef = true; chosenDist = -20.0 end
+            end
+        end
 
-                    if states.Freeze and states.BackpackOpen then
-                        autoDefenseActive = true
-                        chosenDistance = -20.0
-                    end
+        if (stateBehind or stateWave or stateUnder or stateAntiBack) and isTargetRagdoll(targetPlayer) then
+            setSmartFreeze(true)
+            myHRP.CFrame = CFrame.lookAt(predictedPos - Vector3_new(0, 3.5, 0), predictedPos)
+        else
+            if stateBehind then
+                setSmartFreeze(true)
+                myHRP.CFrame = CFrame.lookAt(predictedPos + (targetHRP.CFrame.LookVector * (autoDef and chosenDist or -5.0)), predictedPos)
+            elseif stateWave then
+                setSmartFreeze(true)
+                if not autoDef then
+                    loopTime = loopTime + 0.67
+                    chosenDist = -(1.0 + (((math_sin(loopTime) + 1) / 2) * 4.0))
+                end
+                myHRP.CFrame = CFrame.lookAt(predictedPos + (targetHRP.CFrame.LookVector * chosenDist), predictedPos)
+            elseif stateUnder then
+                setSmartFreeze(true)
+                myHRP.CFrame = CFrame.lookAt(predictedPos - Vector3_new(0, 3.5, 0), predictedPos)
+            elseif stateAntiBack then
+                setSmartFreeze(true)
+                loopTime = loopTime + deltaTime * 65
+                local finalPos = predictedPos + (targetHRP.CFrame.LookVector * (autoDef and chosenDist or -3.2)) + (targetHRP.CFrame.RightVector * (math_sin(loopTime) * 3.2))
+                myHRP.CFrame = CFrame.lookAt(finalPos, predictedPos)
+                myHRP.Velocity = targetHRP.CFrame.RightVector * (math_cos(loopTime) * 15)
+            else
+                if not stateBehind and not stateWave then setSmartFreeze(false) end
+            end
+        end
+        
+        if stateBehind or stateWave or stateUnder or stateAntiBack then
+            myHum.AutoRotate = false; Camera.CameraType = Enum.CameraType.Scriptable
+            Camera.CFrame = CFrame_new(targetHRP.Position + Vector3_new(0, 2, 0)) * (CFrame_Angles(0, math_rad(cameraX), 0) * CFrame_Angles(math_rad(cameraY), 0, 0)) * CFrame_new(0, 0, cameraZoom)
+        end
+    else
+        if not stateBehind and not stateWave and not stateUnder and not stateAntiBack and Camera.CameraType == Enum.CameraType.Scriptable then
+            Camera.CameraType = Enum.CameraType.Custom; myHum.AutoRotate = true
+        end
+        setSmartFreeze(false)
+    end
+end))
 
-                    if states.Free and firstToolName == "Doom Dive" then
- 
