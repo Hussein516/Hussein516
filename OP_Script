@@ -6,7 +6,7 @@ local LocalPlayer = Players.LocalPlayer
 local Camera = workspace.CurrentCamera
 local PlayerGui = LocalPlayer:WaitForChild("PlayerGui")
 
--- [ نظام منع تكرار السكربت ]
+-- [ نظام منع التكرار وتنظيف الذاكرة ]
 getgenv().CyberSettings = getgenv().CyberSettings or {}
 if getgenv().CyberSettings.Conns then
     for _, conn in pairs(getgenv().CyberSettings.Conns) do if conn then conn:Disconnect() end end
@@ -17,17 +17,16 @@ local conns = getgenv().CyberSettings.Conns
 if PlayerGui:FindFirstChild("TargetSysGui") then PlayerGui.TargetSysGui:Destroy() end
 if workspace:FindFirstChild("CyberVoidBarrier") then workspace.CyberVoidBarrier:Destroy() end
 
-local math_sin, math_cos, math_rad, math_clamp, math_abs = math.sin, math.cos, math.rad, math.clamp, math.abs
+local math_sin, math_cos, math_rad, math_clamp = math.sin, math.cos, math.rad, math.clamp
 local CFrame_new, CFrame_Angles, Vector3_new = CFrame.new, CFrame.Angles, Vector3.new
 
--- [ جدار الفويد الفيزيائي ]
+-- [ جدار حماية الفويد الفيزيائي ]
 local Barrier = Instance.new("Part", workspace)
 Barrier.Name = "CyberVoidBarrier"; Barrier.Size = Vector3_new(5000, 2, 5000)
 Barrier.Position = Vector3_new(0, workspace.FallenPartsDestroyHeight + 6.5, 0)
-Barrier.Anchored = true; Barrier.CanCollide = true
-Barrier.Material = Enum.Material.ForceField; Barrier.Color = Color3.fromRGB(0, 170, 255); Barrier.Transparency = 0.85
+Barrier.Anchored = true; Barrier.CanCollide = true; Barrier.Material = Enum.Material.ForceField; Barrier.Color = Color3.fromRGB(0, 170, 255); Barrier.Transparency = 0.85
 
--- [ الواجهة ]
+-- [ بناء الواجهة الرسومية بالكامل ]
 local ScreenGui = Instance.new("ScreenGui", PlayerGui); ScreenGui.Name = "TargetSysGui"; ScreenGui.ResetOnSpawn = false
 local ToggleBtn = Instance.new("TextButton", ScreenGui)
 ToggleBtn.Size = UDim2.new(0, 85, 0, 24); ToggleBtn.Position = UDim2.new(0.9, -10, 0.05, 0); ToggleBtn.BackgroundColor3 = Color3.fromRGB(10, 10, 15); ToggleBtn.Text = "⚡ [ CLOSE ]"; ToggleBtn.TextColor3 = Color3.fromRGB(255, 60, 60); ToggleBtn.Font = Enum.Font.GothamBold; ToggleBtn.TextSize = 9
@@ -59,7 +58,7 @@ local BtnFPS = createBtn("🚀 فريمات + ANTI LAG: مطفأ", 178, Color3.n
 local BtnVoidTrap = createBtn("💀 إعصار النوم المغزلي القاتل (5S)", 207, Color3.new(1,1,1))
 BtnVoidTrap.Size = UDim2.new(0, 174, 0, 30); BtnVoidTrap.BackgroundColor3 = Color3.fromRGB(160, 15, 40)
 
--- [ المتغيرات الأساسية ]
+-- [ المتغيرات الأساسية للمحرك ]
 local targetPlayer = nil
 local stateBehind, stateWave, stateUnder, stateAntiBack, stateVoidTrap, stateFPS = false, false, false, false, false, false
 local savedPosition = nil
@@ -173,7 +172,7 @@ table.insert(conns, RunService.Stepped:Connect(function()
     end
 end))
 
--- [ المحرك الأساسي وأنظمة الفحص المحسنة ]
+-- [ محرك الرندرة الأساسي ونظام الفحص المدمج كلياً ]
 table.insert(conns, RunService.RenderStepped:Connect(function(deltaTime)
     local myChar = LocalPlayer.Character
     if not myChar then return end
@@ -232,20 +231,31 @@ table.insert(conns, RunService.RenderStepped:Connect(function(deltaTime)
                 local hasBackpack = targetFolder:FindFirstChild("BackpackOpen") ~= nil
                 local hasHunter = targetFolder:FindFirstChild("HunterCounter") ~= nil
 
-                -- شروط التجميد
+                -- شرط وموثوقية عمل كائن Freeze الذكي
                 local freezeOK = hasFreeze and (hasGrabWep or hasGreen or firstTool == "Weboom" or firstTool == "Doom Dive")
 
-                -- كل الكائنات الأخرى تعمل دائماً 
-                local stdObjs = targetFolder:FindFirstChild("Slowed") or targetFolder:FindFirstChild("ProjectileCounter") or targetFolder:FindFirstChild("HunterFists") or targetFolder:FindFirstChild("NoBlock") or targetFolder:FindFirstChild("NoPunch") or targetFolder:FindFirstChild("NoDash") or targetFolder:FindFirstChild("BarrageBind") or targetFolder:FindFirstChild("HiddenFist") or targetFolder:FindFirstChild("AtomicCounter") or targetFolder:FindFirstChild("BodyGyroBind")
+                -- مصفوفة كائنات الحماية الكاملة المدمجة (تعمل دائماً دون إقصاء)
+                local stdObjs = targetFolder:FindFirstChild("Slowed") or targetFolder:FindFirstChild("ProjectileCounter") or 
+                                targetFolder:FindFirstChild("HunterFists") or targetFolder:FindFirstChild("NoBlock") or 
+                                targetFolder:FindFirstChild("NoPunch") or targetFolder:FindFirstChild("NoDash") or 
+                                targetFolder:FindFirstChild("BarrageBind") or targetFolder:FindFirstChild("HiddenFist") or 
+                                targetFolder:FindFirstChild("AtomicCounter") or targetFolder:FindFirstChild("BodyGyroBind")
 
+                -- تفعيل نظام الحماية العام بمسافة 10 ستودز في الحالة العادية
                 if stdObjs or freezeOK or hasGreen then
                     autoDef = true; chosenDist = -10.0
                 end
                 
-                -- المسافات المخصصة (الأولوية لها)
-                if hasHunter then autoDef = true; chosenDist = -13.0 end
-                if hasFreeze and hasBackpack then autoDef = true; chosenDist = -20.0 end
-                if hasFree and firstTool == "Doom Dive" then autoDef = true; chosenDist = -20.0 end
+                -- تطبيق المسافات الحتمية المخصصة (أولوية مطلقة)
+                if hasHunter then 
+                    autoDef = true; chosenDist = -13.0 
+                end
+                if hasFreeze and hasBackpack then 
+                    autoDef = true; chosenDist = -20.0 
+                end
+                if hasFree and firstTool == "Doom Dive" then 
+                    autoDef = true; chosenDist = -20.0 
+                end
             end
         end
 
@@ -288,4 +298,3 @@ table.insert(conns, RunService.RenderStepped:Connect(function(deltaTime)
         setSmartFreeze(false)
     end
 end))
-
