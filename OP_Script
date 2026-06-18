@@ -224,29 +224,50 @@ table.insert(conns, RunService.RenderStepped:Connect(function(deltaTime)
                     firstTool = bp:GetChildren()[1].Name
                 end
 
+                -- تحديد إذا كانت الشخصية مميزة تفحص أول أداة لها
+                local isSpecialCharacter = (firstTool == "Weboom" or firstTool == "Doom Dive" or firstTool == "Bullet Barrage" or firstTool == "Machine Gun Blows" or firstTool == "Crushing Pull")
+
                 local hasFreeze = targetFolder:FindFirstChild("Freeze") ~= nil
+                local hasSlowed = targetFolder:FindFirstChild("Slowed") ~= nil
                 local hasGrabWep = targetFolder:FindFirstChild("GrabWeapon") ~= nil
+                local hasBackpack = targetFolder:FindFirstChild("BackpackOpen") ~= nil
                 local hasGreen = targetFolder:FindFirstChild("GreenAura") ~= nil
                 local hasFree = targetFolder:FindFirstChild("free") ~= nil
-                local hasBackpack = targetFolder:FindFirstChild("BackpackOpen") ~= nil
                 local hasHunter = targetFolder:FindFirstChild("HunterCounter") ~= nil
 
-                -- شرط وموثوقية عمل كائن Freeze الذكي
-                local freezeOK = hasFreeze and (hasGrabWep or hasGreen or firstTool == "Weboom" or firstTool == "Doom Dive")
+                -- شروط تفعيل كائن Freeze المقيدة بالكامل
+                local freezeOK = false
+                if isSpecialCharacter and hasFreeze then
+                    if hasGrabWep or hasBackpack then
+                        freezeOK = true
+                    end
+                end
 
-                -- مصفوفة كائنات الحماية الكاملة المدمجة (تعمل دائماً دون إقصاء)
-                local stdObjs = targetFolder:FindFirstChild("Slowed") or targetFolder:FindFirstChild("ProjectileCounter") or 
-                                targetFolder:FindFirstChild("HunterFists") or targetFolder:FindFirstChild("NoBlock") or 
-                                targetFolder:FindFirstChild("NoPunch") or targetFolder:FindFirstChild("NoDash") or 
-                                targetFolder:FindFirstChild("BarrageBind") or targetFolder:FindFirstChild("HiddenFist") or 
-                                targetFolder:FindFirstChild("AtomicCounter") or targetFolder:FindFirstChild("BodyGyroBind")
+                local defenseTriggered = false
 
-                -- تفعيل نظام الحماية العام بمسافة 10 ستودز في الحالة العادية
-                if stdObjs or freezeOK or hasGreen then
-                    autoDef = true; chosenDist = -10.0
+                -- استثناء مهارة Machine Gun Blows (فقط Freeze و Slowed يعملان)
+                if firstTool == "Machine Gun Blows" then
+                    if freezeOK or hasSlowed then
+                        defenseTriggered = true
+                    end
+                else
+                    -- الفحص العام المعتاد لبقية الأدوار والشخصيات
+                    local stdObjs = hasSlowed or targetFolder:FindFirstChild("ProjectileCounter") or 
+                                    targetFolder:FindFirstChild("HunterFists") or targetFolder:FindFirstChild("NoBlock") or 
+                                    targetFolder:FindFirstChild("NoPunch") or targetFolder:FindFirstChild("NoDash") or 
+                                    targetFolder:FindFirstChild("BarrageBind") or targetFolder:FindFirstChild("HiddenFist") or 
+                                    targetFolder:FindFirstChild("AtomicCounter") or targetFolder:FindFirstChild("BodyGyroBind")
+
+                    if stdObjs or freezeOK or hasGreen then
+                        defenseTriggered = true; chosenDist = -10.0
+                    end
+                end
+
+                -- تفعيل وضع الحماية والمسافات الاستثنائية الحتمية
+                if defenseTriggered then
+                    autoDef = true
                 end
                 
-                -- تطبيق المسافات الحتمية المخصصة (أولوية مطلقة)
                 if hasHunter then 
                     autoDef = true; chosenDist = -13.0 
                 end
