@@ -20,10 +20,10 @@ if workspace:FindFirstChild("CyberVoidBarrier") then workspace.CyberVoidBarrier:
 local math_sin, math_cos, math_rad, math_clamp = math.sin, math.cos, math.rad, math.clamp
 local CFrame_new, CFrame_Angles, Vector3_new = CFrame.new, CFrame.Angles, Vector3.new
 
--- [ جدار حماية الفويد الفيزيائي ]
+-- [ جدار حماية الفويد الفيزيائي المحسن - حماية قصوى من الموت ]
 local Barrier = Instance.new("Part", workspace)
 Barrier.Name = "CyberVoidBarrier"; Barrier.Size = Vector3_new(5000, 2, 5000)
-Barrier.Position = Vector3_new(0, workspace.FallenPartsDestroyHeight + 6.5, 0)
+Barrier.Position = Vector3_new(0, workspace.FallenPartsDestroyHeight + 11.5, 0)
 Barrier.Anchored = true; Barrier.CanCollide = true; Barrier.Material = Enum.Material.ForceField; Barrier.Color = Color3.fromRGB(0, 170, 255); Barrier.Transparency = 0.85
 
 -- [ بناء الواجهة الرسومية بالكامل ]
@@ -182,7 +182,7 @@ table.insert(conns, RunService.RenderStepped:Connect(function(deltaTime)
 
     local absoluteMinY = Barrier.Position.Y + 1.5
     if myHRP.Position.Y < absoluteMinY and not stateVoidTrap then
-        myHRP.Velocity = Vector3_new(0, 0, 0); myHRP.CFrame = CFrame_new(myHRP.Position.X, absoluteMinY + 2.0, myHRP.Position.Z)
+        myHRP.Velocity = Vector3_new(0, 0, 0); myHRP.CFrame = CFrame_new(myHRP.Position.X, absoluteMinY + 3.0, myHRP.Position.Z)
     end
 
     if stateVoidTrap then
@@ -235,9 +235,11 @@ table.insert(conns, RunService.RenderStepped:Connect(function(deltaTime)
                 local hasFree = targetFolder:FindFirstChild("free") ~= nil
                 local hasHunter = targetFolder:FindFirstChild("HunterCounter") ~= nil
 
-                -- شروط تفعيل كائن Freeze المقيدة بالكامل
+                -- شروط تفعيل كائن Freeze المقيدة بالكامل واستثناء Weboom ليصبح دائماً شغالاً
                 local freezeOK = false
-                if isSpecialCharacter and hasFreeze then
+                if firstTool == "Weboom" then
+                    if hasFreeze then freezeOK = true end
+                elseif isSpecialCharacter and hasFreeze then
                     if hasGrabWep or hasBackpack then
                         freezeOK = true
                     end
@@ -272,7 +274,7 @@ table.insert(conns, RunService.RenderStepped:Connect(function(deltaTime)
                     autoDef = true; chosenDist = -13.0 
                 end
                 if hasFreeze and hasBackpack then 
-                    autoDef = true; chosenDist = -20.0 
+                    autoDef = true; chosenDist = (firstTool == "Weboom") and -30.0 or -20.0
                 end
                 if hasFree and firstTool == "Doom Dive" then 
                     autoDef = true; chosenDist = -20.0 
