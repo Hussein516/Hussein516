@@ -1,0 +1,85 @@
+local Players = game:GetService("Players")
+local Lighting = game:GetService("Lighting")
+
+local function safeCall(func)
+	local success, err = pcall(func)
+	return success
+end
+
+safeCall(function()
+	settings().Rendering.QualityLevel = Enum.QualityLevel.Level01
+end)
+
+safeCall(function()
+	Lighting.GlobalShadows = false
+	Lighting.FogEnd = 9e9
+	Lighting.Brightness = 1
+end)
+
+safeCall(function()
+	local terrain = workspace:Terrain
+	terrain.WaterWaveSize = 0
+	terrain.WaterWaveSpeed = 0
+	terrain.WaterReflectance = 0
+	terrain.WaterTransparency = 0
+end)
+
+local function isPlayerAsset(obj)
+	local current = obj.Parent
+	while current and current ~= workspace do
+		if current:IsA("Model") and Players:GetPlayerFromCharacter(current) then
+			return true
+		end
+		if current:IsA("Accessory") or current:IsA("Tool") or current:IsA("Shirt") or current:IsA("Pants") then
+			return true
+		end
+		current = current.Parent
+	end
+	return false
+end
+
+local function applyFullOptimize(obj)
+	if not obj or not obj.Parent then return end
+	
+	if obj:IsA("Texture") or obj:IsA("Decal") or obj:IsA("ParticleEmitter") or obj:IsA("Trail") or obj:IsA("Beam") or obj:IsA("Smoke") or obj:IsA("Fire") or obj:IsA("Sparkles") or obj:IsA("PostEffect") or obj:IsA("Atmosphere") or obj:IsA("Clouds") then
+		safeCall(function() obj:Destroy() end)
+	elseif obj:IsA("BasePart") then
+		if not isPlayerAsset(obj) then
+			safeCall(function()
+				obj.Material = Enum.Material.SmoothPlastic
+				obj.Reflectance = 0
+				obj.CastShadow = false
+				if obj:IsA("MeshPart") then
+					obj.TextureID = ""
+				end
+				
+				local box = Instance.new("SelectionBox")
+				box.Color3 = Color3.fromRGB(255, 0, 0)
+				box.LineThickness = 0.05
+				box.SurfaceTransparency = 1
+				box.Adornee = obj
+				box.Parent = obj
+			end)
+		end
+	elseif obj:IsA("SpecialMesh") then
+		if not isPlayerAsset(obj) then
+			safeCall(function() obj.TextureId = "" end)
+		end
+	end
+end
+
+local objects = workspace:GetDescendants()
+for i = 1, #objects do
+	applyFullOptimize(objects[i])
+end
+
+safeCall(function()
+	table.clear(objects)
+	objects = nil
+end)
+
+if gcinfo then
+	for i = 1, 3 do
+		safeCall(function() collectgarbage("collect") end)
+	end
+end
